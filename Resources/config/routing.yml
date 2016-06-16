@@ -1,0 +1,27 @@
+# ------------------------------------------------------------------------------
+#  BACKEND
+# ------------------------------------------------------------------------------
+
+webburza_location_type:
+    resource: |
+        alias: webburza_location.location_type
+        templates: WebburzaSyliusLocationBundle:Backend/LocationType
+    type: sylius.resource
+    prefix: /administration
+
+webburza_location:
+    resource: |
+        alias: webburza_location.location
+        templates: WebburzaSyliusLocationBundle:Backend/Location
+    type: sylius.resource
+    prefix: /administration
+
+webburza_location_location_image_delete:
+    path: /administration/location-image/{id}
+    methods: [DELETE]
+    defaults:
+        _controller: webburza_location.controller.location_image:deleteAction
+        _sylius:
+            redirect:
+                route: webburza_location_location_show
+                parameters: { id: $locationId }

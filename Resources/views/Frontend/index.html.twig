@@ -1,0 +1,41 @@
+{% extends 'SyliusWebBundle:Frontend:layout.html.twig' %}
+
+{% block title %}Locations{% endblock %}
+
+{% block main %}
+<hr>
+{% block slideshow_full %}{% endblock %}
+<div class="row">
+    <div class="col-md-12">
+        {% block content %}
+            {{ render(controller('WebburzaSyliusLocationBundle:Frontend/Location:search', {'request': app.request})) }}
+        {% endblock %}
+    </div>
+</div>
+<div class="row">
+    {% for i in 1..3 %}
+        <div class="col-md-4">
+            {{ sonata_block_render({'name': '/cms/blocks/block-' ~ i}) }}
+        </div>
+    {% endfor %}
+</div>
+<hr>
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+
+    {% stylesheets 'bundles/webburzasyliuslocation/css/*' filter='cssrewrite' %}
+        <link rel="stylesheet" href="{{ asset_url }}" type="text/css" />
+    {% endstylesheets %}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    <script src="//maps.googleapis.com/maps/api/js?key={{ googleMapsKey }}"></script>
+
+    {% javascripts '@WebburzaSyliusLocationBundle/Resources/public/js/locations.js' %}
+        <script type="text/javascript" src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+{% endblock %}

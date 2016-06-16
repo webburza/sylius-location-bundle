@@ -1,0 +1,61 @@
+{% extends 'SyliusWebBundle:Backend:layout.html.twig' %}
+
+{% import 'SyliusResourceBundle:Macros:buttons.html.twig' as buttons %}
+{% import 'SyliusWebBundle:Backend/Macros:alerts.html.twig' as alerts %}
+{% import 'SyliusWebBundle:Backend/Macros:misc.html.twig' as misc %}
+
+{% block topbar %}
+    <ol class="breadcrumb">
+        <li>{{ 'sylius.breadcrumb.content'|trans }}</li>
+        <li><a href="{{ path('webburza_location_location_type_index') }}">{{ 'webburza.sylius.location_type.breadcrumb.index'|trans }}</a></li>
+        <li>{{ location_type.name }}</li>
+    </ol>
+{% endblock %}
+
+{% block content %}
+    <div class="page-header">
+        <div class="actions-menu">
+            {{ buttons.edit(path('webburza_location_location_type_update', {'id': location_type.id})) }}
+            {{ buttons.delete(path('webburza_location_location_type_delete', {'id': location_type.id}), null, false, true) }}
+        </div>
+        <h1>
+            <i class="glyphicon glyphicon-info-sign"></i> {{ 'webburza.sylius.location_type.show_header' | trans }}
+        </h1>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <table class="table table-bordered">
+                <thead>
+                <tr>
+                    <th colspan="2">{{ 'webburza.sylius.location_type.general_info'|trans }}</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td><strong>{{ 'webburza.sylius.location_type.label.id'|trans }}</strong></td>
+                    <td>{{ location_type.id }}</td>
+                </tr>
+                <tr>
+                    <td><strong>{{ 'webburza.sylius.location_type.label.name'|trans }}</strong></td>
+                    <td>{{ location_type.name }}</td>
+                </tr>
+                <tr>
+                    <td><strong>{{ 'webburza.sylius.location_type.label.created_at' | trans }}</strong></td>
+                    <td>{{ location_type.createdAt | date }}</td>
+                </tr>
+                <tr>
+                    <td><strong>{{ 'webburza.sylius.location_type.label.updated_at' | trans }}</strong></td>
+                    <td>
+                        {% if (location_type.updatedAt) %}
+                            {{ location_type.updatedAt | date }}
+                        {% else %}
+                            &mdash;
+                        {% endif %}
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}

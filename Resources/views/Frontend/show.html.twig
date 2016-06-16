@@ -1,0 +1,138 @@
+{% extends 'SyliusWebBundle:Frontend:layout.html.twig' %}
+
+{% block title %}{{ location.name }} {{ location.streetName ~ ' ' ~ location.streetNumber ~ ', ' ~ location.city }}{% endblock %}
+{% block type %}place{% endblock %}
+{% block extraOG %}
+<meta property="place:location:latitude" content="{{ location.latitude }}" />
+<meta property="place:location:longitude" content="{{ location.longitude }}" />
+{% endblock %}
+
+{% set googleMapURL = 'https://www.google.hr/maps/place/' ~ (location.streetName ~ '+' ~ location.streetNumber)|replace({' ':'+'}) ~ ',+' ~ location.zip ~ ',+' ~ location.city ~ '/@' ~ location.latitude ~ ',' ~ location.longitude ~ ',17z' %}
+
+{% block main %}
+<hr>
+{% block slideshow_full %}{% endblock %}
+<div class="row">
+    <div class="col-md-12">
+        {% block content %}
+
+            <div class="Location">
+
+                <div class="row">
+
+                    <div class="col-md-12">
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <h4>{{ location.locationType.name }}</h4>
+                            </div>
+
+                            <div class="col-md-12">
+                                <div class="page-header">
+                                    <h1>{{ location.name }} - {{ location.streetName ~ ' ' ~ location.streetNumber ~ ', ' ~ location.city }}</h1>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-3 col-sm-4">
+                                        <div class="panel panel-default">
+                                            <div class="panel-heading">
+                                                <h2 class="panel-title">{{ 'webburza.sylius.location.frontend.contact' | trans }}</h2>
+                                            </div>
+                                            <div class="panel-body">
+                                                <p>{{ 'webburza.sylius.location.label.phone' | trans }}: <a href="tel:{{ location.phone|replace({'-' : '', ' ' : '', '/' : ''}) }}">{{ location.phone }}</a>
+                                                </p>
+                                                {% if location.email %}
+                                                <p>{{ 'webburza.sylius.location.label.email' | trans }}: <a href="mailto:{{ location.email }}">{{ location.email }}</a></p>
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-3 col-sm-4">
+                                        <div class="panel panel-default">
+                                            <div class="panel-heading">
+                                                <h2 class="panel-title">{{ 'webburza.sylius.location.label.working_hours' | trans }}</h2>
+                                            </div>
+                                            <div class="panel-body">
+                                                <p>{{ location.workingHours|nl2br }}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                {% if location.images.snapshot | length %}
+                <div class="row">
+                    <div class="col-md-12">
+                        <h2>{{ 'webburza.sylius.location.label.images' | trans }}</h2>
+                    </div>
+
+                    {% for image in location.images.snapshot %}
+                        <div class="col-md-3 col-sm-3 col-xs-4">
+                            <a href="{{ image.path | imagine_filter('sylius_large') }}" target="_blank"><img class="Location-image img-thumbnail thumbnail" src="{{ image.path | imagine_filter('sylius_255x255') }}"></a>
+                        </div>
+                    {% endfor %}
+                </div>
+                {% endif %}
+
+
+                <div class="row">
+
+                    <div class="col-md-12">
+                        <p><a class="btn btn-success btn-sm" href="{{ path('webburza_location_frontend_index') }}"><i class="glyphicon glyphicon-chevron-left" role="presentation" aria-hidden="true"></i> {{ 'webburza.sylius.location.back_to_all' | trans }}</a></p>
+                        <hr>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="Map Map--view">
+                            <div id="Map-holder"></div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12 text-center">
+                        <br>
+                        <a class="btn btn-sm btn-success" href="{{ googleMapURL }}" target="_blank"><i class="glyphicon glyphicon-new-window" role="presentation" aria-hidden="true"></i> {{ 'webburza.sylius.location.frontend.open_in_gm' | trans }}</a>
+                    </div>
+                </div>
+
+                <script>
+                    var loc = {{ locationJson | raw }};
+                </script>
+            </div>
+            {% endblock %}
+                </div>
+            </div>
+            <div class="row">
+                {% for i in 1..3 %}
+                    <div class="col-md-4">
+                        {{ sonata_block_render({'name': '/cms/blocks/block-' ~ i}) }}
+                    </div>
+                {% endfor %}
+            </div>
+            <hr>
+        {% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+
+    {% stylesheets 'bundles/webburzasyliuslocation/css/*' filter='cssrewrite' %}
+        <link rel="stylesheet" href="{{ asset_url }}" type="text/css" />
+    {% endstylesheets %}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    <script src="//maps.googleapis.com/maps/api/js?key={{ googleMapsKey }}"></script>
+
+    {% javascripts '@WebburzaSyliusLocationBundle/Resources/public/js/location.js' %}
+        <script type="text/javascript" src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+{% endblock %}

@@ -1,0 +1,63 @@
+<div class="Location Location--listing">
+    <div class="row">
+
+        <div class="col-md-12">
+            <div class="page-header">
+                <h1>{{ 'webburza.sylius.location.frontend.all_locations' | trans }}</h1>
+            </div>
+
+            <div class="well">
+                <form class="Location-search" action="/locations/search/" method="GET">
+                    <div class="col-md-12 form-group">
+                        <label class="required" for="location-input">{{ 'webburza.sylius.location.frontend.city_place_street' | trans }}</label>
+
+                        <input class="Location-input form-control" type="text" name="query" id="location-input" tabindex="1" />
+                    </div>
+                </form>
+            </div>
+
+            <div class="row">
+            {% if locations %}
+
+                <div class="LocationList clearfix">
+
+                {% for location in locations %}
+                    {% if location.published %}
+                    <div class="LocationList-item col-md-4 col-sm-4 col-xs-6" data-location-id="{{ location.id }}" data-location-lat="{{ location.latitude }}" data-location-lng="{{ location.longitude }}">
+                        <p>{{ location.locationType.name }}</p>
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h3 class="panel-title">{{ location.name }}</h3>
+                                </div>
+                                <div class="panel-body">
+                                    <p class="LocationList-title">{{ location.streetName }} {{ location.streetNumber }}, {{ location.city }}, {{ location.country }}</p>
+
+                                    <p>{{ 'webburza.sylius.location.label.phone' | trans }}: <a href="tel:{{ location.phone|replace({'-' : '', ' ' : '', '/' : ''})|replace('+', '00') }}">{{ location.phone }}</a></p>
+
+                                    <div class="LocationList-workingHoursContainer clearfix">
+                                        <p class="LocationList-workingHours LocationList-workingHours-title">{{ 'webburza.sylius.location.label.working_hours' | trans }}: {{ location.workingHours|nl2br }}</p>
+
+                                        <a href="{{ path('webburza_location_frontend_show', {slug: location.slug}) }}" class="LocationList-link btn btn-success btn-sm">{{ 'webburza.sylius.location.frontend.details' | trans }}</a>
+                                    </div>
+
+                                </div>
+                            </div>
+                    </div>
+                    {% endif %}
+                {% endfor %}
+
+                </div>
+            {% endif %}
+            </div>
+            <hr>
+        </div>
+        {% if googleMapsEnabled and googleMapsKey %}
+        <div class="col-md-12">
+            <div class="Map Map--listing">
+                <div id="Map-holder"></div>
+            </div>
+        </div>
+        {% endif %}
+
+    </div>
+</div>

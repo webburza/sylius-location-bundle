@@ -1,0 +1,170 @@
+{% extends 'SyliusWebBundle:Backend:layout.html.twig' %}
+
+{% import 'SyliusResourceBundle:Macros:buttons.html.twig' as buttons %}
+{% import 'SyliusWebBundle:Backend/Macros:alerts.html.twig' as alerts %}
+{% import 'SyliusWebBundle:Backend/Macros:misc.html.twig' as misc %}
+
+{% block topbar %}
+    <ol class="breadcrumb">
+        <li>{{ 'sylius.breadcrumb.content'|trans }}</li>
+        <li><a href="{{ path('webburza_location_location_index') }}">{{ 'webburza.sylius.location.breadcrumb.index'|trans }}</a></li>
+        <li>{{ location.name }}</li>
+    </ol>
+{% endblock %}
+
+{% block content %}
+    <div class="page-header">
+        <div class="actions-menu">
+            {% if location.published %}
+                {{ buttons.generic(path('webburza_location_frontend_show', {'slug': location.slug}), 'webburza.sylius.location.open' | trans, 'share') }}
+            {% endif %}
+
+            {{ buttons.edit(path('webburza_location_location_update', {'id': location.id})) }}
+            {{ buttons.delete(path('webburza_location_location_delete', {'id': location.id}), null, false, true) }}
+        </div>
+        <h1>
+            <i class="glyphicon glyphicon-info-sign"></i> {{ 'webburza.sylius.location.show_header' | trans }}
+        </h1>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="panel panel-default">
+                <div class="panel-heading">{{ location.name }}</div>
+                <div class="panel-body">{{ location.description | raw }}</div>
+            </div>
+
+            <div class="panel panel-default">
+                <div class="panel-heading">{{ 'webburza.sylius.location.label.images'|trans }}</div>
+                <div class="panel-body">
+                    {% if location.images %}
+                        {% for locationImage in location.images %}
+                            <img src="{{ locationImage.path | imagine_filter('sylius_medium') }}" alt="" class="img-rounded">
+
+                            <div>
+                                <form action="{{ path('webburza_location_location_image_delete', {id: locationImage.id, locationId: location.id}) }}" method="post" class="delete-action-form" novalidate>
+                                    <input type="hidden" name="_method" value="DELETE">
+                                    <button class="btn btn-link btn-confirm" type="submit">
+                                        <i class="glyphicon glyphicon-trash"></i> <span>{{ 'webburza.sylius.location.delete_image' | trans }}</span>
+                                    </button>
+                                </form>
+                            </div>
+                        {% endfor %}
+                    {% else %}
+                        &mdash;
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <table class="table table-bordered">
+                <thead>
+                <tr>
+                    <th colspan="2">{{ 'webburza.sylius.location.general_info'|trans }}</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td><strong>{{ 'webburza.sylius.location.label.id'|trans }}</strong></td>
+                    <td>{{ location.id }}</td>
+                </tr>
+                <tr>
+                    <td><strong>{{ 'webburza.sylius.location.label.internal_name'|trans }}</strong></td>
+                    <td>{{ location.internalName }}</td>
+                </tr>
+                <tr>
+                    <td><strong>{{ 'webburza.sylius.location.label.published'|trans }}</strong></td>
+                    <td>
+                        {% if location.published %}
+                            <span class="label label-success">Yes</span>
+                        {% else %}
+                            <span class="label label-danger">No</span>
+                        {% endif %}
+                    </td>
+                </tr>
+                <tr>
+                    <td><strong>{{ 'webburza.sylius.location.label.name'|trans }}</strong></td>
+                    <td>{{ location.name }}</td>
+                </tr>
+                <tr>
+                    <td><strong>{{ 'webburza.sylius.location.label.street_name'|trans }}</strong></td>
+                    <td>{{ location.streetName }}</td>
+                </tr>
+                <tr>
+                    <td><strong>{{ 'webburza.sylius.location.label.street_number'|trans }}</strong></td>
+                    <td>{{ location.streetNumber }}</td>
+                </tr>
+                <tr>
+                    <td><strong>{{ 'webburza.sylius.location.label.city'|trans }}</strong></td>
+                    <td>{{ location.city }}</td>
+                </tr>
+                <tr>
+                    <td><strong>{{ 'webburza.sylius.location.label.zip'|trans }}</strong></td>
+                    <td>{{ location.zip }}</td>
+                </tr>
+                <tr>
+                    <td><strong>{{ 'webburza.sylius.location.label.state'|trans }}</strong></td>
+                    <td>{{ location.state }}</td>
+                </tr>
+                <tr>
+                    <td><strong>{{ 'webburza.sylius.location.label.country'|trans }}</strong></td>
+                    <td>{{ location.country }}</td>
+                </tr>
+                <tr>
+                    <td><strong>{{ 'webburza.sylius.location.label.working_hours'|trans }}</strong></td>
+                    <td>{{ location.workingHours }}</td>
+                </tr>
+                <tr>
+                    <td><strong>{{ 'webburza.sylius.location.label.meta_keywords'|trans }}</strong></td>
+                    <td>{{ location.metaKeywords }}</td>
+                </tr>
+                <tr>
+                    <td><strong>{{ 'webburza.sylius.location.label.meta_description'|trans }}</strong></td>
+                    <td>{{ location.metaDescription }}</td>
+                </tr>
+                <tr>
+                    <td><strong>{{ 'webburza.sylius.location.label.phone'|trans }}</strong></td>
+                    <td>{{ location.phone }}</td>
+                </tr>
+                <tr>
+                    <td><strong>{{ 'webburza.sylius.location.label.email'|trans }}</strong></td>
+                    <td>{{ location.email }}</td>
+                </tr>
+                <tr>
+                    <td><strong>{{ 'webburza.sylius.location.label.latitude'|trans }}</strong></td>
+                    <td>{{ location.latitude }}</td>
+                </tr>
+                <tr>
+                    <td><strong>{{ 'webburza.sylius.location.label.longitude'|trans }}</strong></td>
+                    <td>{{ location.longitude }}</td>
+                </tr>
+                <tr>
+                    <td><strong>{{ 'webburza.sylius.location.label.type'|trans }}</strong></td>
+                    <td>
+                        {% if location.locationType %}
+                            <a href="{{ path('webburza_location_location_type_show', {id: location.locationType.id}) }}">{{ location.locationType.name }}</a>
+                        {% else %}
+                            &mdash;
+                        {% endif %}
+                    </td>
+                </tr>
+                <tr>
+                    <td><strong>{{ 'webburza.sylius.location.label.created_at' | trans }}</strong></td>
+                    <td>{{ location.createdAt | date }}</td>
+                </tr>
+                <tr>
+                    <td><strong>{{ 'webburza.sylius.location.label.updated_at' | trans }}</strong></td>
+                    <td>
+                        {% if (location.updatedAt) %}
+                            {{ location.updatedAt | date }}
+                        {% else %}
+                            &mdash;
+                        {% endif %}
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}

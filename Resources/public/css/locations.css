@@ -1,0 +1,62 @@
+/* ====================================
+   Locations CSS
+   ==================================== */
+
+.LocationList-item {
+    margin-top: 20px;
+    cursor: pointer;
+}
+
+.Map {
+    position: relative;
+    padding-bottom: 56.25%;
+    height: 0;
+}
+
+#Map-holder {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+/* ====================================
+   Spinner CSS
+   ==================================== */
+
+@-webkit-keyframes spin {
+  0% {
+    -webkit-transform: rotate(0deg);
+            transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+            transform: rotate(360deg);
+  }
+}
+@keyframes spin {
+  0% {
+    -webkit-transform: rotate(0deg);
+            transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+            transform: rotate(360deg);
+  }
+}
+
+.loading {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    border: 3px solid rgba(0, 0, 0, 0.5);
+    border-top-color: rgba(255, 255, 255, 0.2);
+    -webkit-animation: spin 1s infinite linear;
+          animation: spin 1s infinite linear;
+    -webkit-transform: translateXY(-50%, -50%);
+    transform: translateXY(-50%, -50%);
+}

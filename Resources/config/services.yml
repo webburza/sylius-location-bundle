@@ -1,0 +1,32 @@
+services:
+    webburza_location.listener.menu_builder:
+        class: Webburza\Sylius\LocationBundle\EventListener\MenuBuilderListener
+        arguments: [@translator]
+        tags:
+            - { name: kernel.event_listener, event: sylius.menu_builder.backend.main, method: addBackendMenuItems }
+            - { name: kernel.event_listener, event: sylius.menu_builder.backend.sidebar, method: addBackendMenuItems }
+
+    webburza_location.listener.front_menu_builder:
+        class: Webburza\Sylius\LocationBundle\EventListener\FrontendMenuBuilderListener
+        arguments: [@translator]
+        tags:
+            - { name: kernel.event_listener, event: sylius.menu_builder.frontend.main, method: addFrontendMenuItems }
+
+    webburza_location.listener.image_upload:
+        class: Webburza\Sylius\LocationBundle\EventListener\ImageUploadListener
+        arguments: [@sylius.image_uploader]
+        tags:
+            - { name: kernel.event_listener, event: webburza_location.location.pre_create, method: uploadLocationImage }
+            - { name: kernel.event_listener, event: webburza_location.location.pre_update, method: uploadLocationImage }
+
+    webburza_location.form.type.location_image:
+        class: Webburza\Sylius\LocationBundle\Form\Type\LocationImageType
+        tags:
+            - { name: form.type, alias: webburza_location_location_image }
+        arguments: [Webburza\Sylius\LocationBundle\Entity\LocationImage]
+
+    webburza_location.form.type.location_type_choice:
+        class: Webburza\Sylius\LocationBundle\Form\Type\LocationTypeChoiceType
+        tags:
+            - { name: form.type, alias: webburza_location_location_type_choice }
+        arguments: [@webburza_location.repository.location_type]
