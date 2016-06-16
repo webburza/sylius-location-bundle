@@ -1,0 +1,25 @@
+{
+    "name": "webburza/sylius-location-bundle",
+    "description": "Location bundle for Sylius e-commerce platform.",
+    "type": "symfony-bundle",
+    "license": "MIT",
+    "keywords": [
+        "webburza",
+        "web.burza",
+        "symfony",
+        "sylius",
+        "location"
+    ],
+    "authors": [
+        {
+            "name": "Tin Benjamin Matuka",
+            "email": "tin@burza.hr"
+        }
+    ],
+    "autoload": {
+        "psr-4": { "Webburza\\Sylius\\LocationBundle\\": "" }
+    },
+    "require": {
+        "sylius/core": "^0.18"
+    },
+}
