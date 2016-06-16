@@ -4,13 +4,6 @@ This bundle adds location (shops, offices, ...) functionality to Sylius e-commer
 and can have their own images. Frontend has a listing of all locations, a simple search, detailed location view with
 images and Google Maps support on both pages.
 
-
-[<img title="Locations CMS" src="http://i.imgur.com/YlyArwU.png" width="235">](http://i.imgur.com/o68LmWi.png)
-[<img title="Single Location CMS" src="http://i.imgur.com/bWYIBzF.png" width="235">](http://i.imgur.com/bQmLDrq.png)
-[<img title="Product Page" src="http://i.imgur.com/FAcIt5x.png" width="235">](http://i.imgur.com/QCJ5fsQ.png)
-[<img title="Location" src="http://i.imgur.com/eFMo85A.png" width="235">](http://i.imgur.com/jS2kML5.png)
-[<img title="Manage Locations" src="http://i.imgur.com/Ux2LL9u.png" width="235">](http://i.imgur.com/sw7LwUQ.png)
-
 ---
 
 ## Installation
