@@ -4,6 +4,9 @@ This bundle adds location (shops, offices, ...) functionality to Sylius e-commer
 and can have their own images. Frontend has a listing of all locations, a simple search, detailed location view with
 images and Google Maps support on both pages.
 
+[<img title="All locations" src="http://i.imgur.com/LdEQhsn.png" width="300">](http://i.imgur.com/LdEQhsn.png)
+[<img title="Single location" src="http://i.imgur.com/WiKPTu5.jpg" width="308">](http://i.imgur.com/WiKPTu5.jpg)
+
 ---
 
 ## Installation
@@ -39,8 +42,8 @@ images and Google Maps support on both pages.
 
   ```
   webburza_sylius_location:
-      google_maps_key: ''        # used for automatically created locations
-      google_maps_enabled: false # multiple location mode
+      google_maps_enabled: false
+      google_maps_key: 1234567890
   ```
 
   4. register routes in `app/config/routing.yml`
