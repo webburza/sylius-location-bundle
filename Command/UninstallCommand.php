@@ -80,12 +80,14 @@ class UninstallCommand extends ContainerAwareCommand
     {
         $repository = $this->getContainer()->get('sylius.repository.permission');
 
-        // Get the main node to remove
-        $managePermission = $repository->findOneBy(['code' => 'webburza_location.manage.location']);
+        // Get the nodes to remove
+        $locationManagePermission = $repository->findOneBy(['code' => 'webburza_location.manage.location']);
+        $locationTypeManagePermission = $repository->findOneBy(['code' => 'webburza_location.manage.location_type']);
 
-        if ($managePermission) {
+        if ($locationManagePermission && $locationTypeManagePermission) {
             // Remove permissions
-            $manager->remove($managePermission);
+            $manager->remove($locationManagePermission);
+            $manager->remove($locationTypeManagePermission);
             $manager->flush();
         }
     }

@@ -5,8 +5,9 @@ namespace Webburza\Sylius\LocationBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Sylius\Component\Resource\Model\ResourceInterface;
-use Sylius\Component\Translation\Model\AbstractTranslatable;
 use JMS\Serializer\Annotation as JMS;
+use Sylius\Component\Resource\Model\TranslatableInterface;
+use Sylius\Component\Resource\Model\TranslatableTrait;
 
 /**
  * LocationType.
@@ -15,8 +16,12 @@ use JMS\Serializer\Annotation as JMS;
  * @ORM\Entity()
  * @JMS\ExclusionPolicy("all")
  */
-class LocationType extends AbstractTranslatable implements ResourceInterface
+class LocationType implements ResourceInterface, TranslatableInterface
 {
+    use TranslatableTrait {
+        __construct as private initializeTranslationsCollection;
+    }
+
     /**
      * @var int
      *
@@ -42,6 +47,14 @@ class LocationType extends AbstractTranslatable implements ResourceInterface
      * @Gedmo\Timestampable(on="update")
      */
     protected $updatedAt;
+
+    /**
+     * LocationType constructor.
+     */
+    public function __construct()
+    {
+        $this->initializeTranslationsCollection();
+    }
 
     /**
      * Get id.

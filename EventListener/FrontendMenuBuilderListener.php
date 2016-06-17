@@ -3,8 +3,8 @@
 namespace Webburza\Sylius\LocationBundle\EventListener;
 
 use Sylius\Bundle\WebBundle\Event\MenuBuilderEvent;
-use Symfony\Component\Translation\DataCollectorTranslator;
 use Symfony\Component\Translation\Translator;
+use Symfony\Component\Translation\TranslatorInterface;
 
 class FrontendMenuBuilderListener
 {
@@ -16,9 +16,9 @@ class FrontendMenuBuilderListener
     /**
      * FrontendMenuBuilderListener constructor.
      *
-     * @param DataCollectorTranslator $translator
+     * @param TranslatorInterface $translator
      */
-    public function __construct(DataCollectorTranslator $translator)
+    public function __construct(TranslatorInterface $translator)
     {
         $this->translator = $translator;
     }

@@ -10,6 +10,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\DependencyInjection\Exception\ServiceCircularReferenceException;
 use Symfony\Component\DependencyInjection\Exception\ServiceNotFoundException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Webburza\Sylius\LocationBundle\Entity\Location;
 
 class LocationController extends Controller
 {
@@ -59,6 +60,8 @@ class LocationController extends Controller
         $googleMapsKey = $this->getParameter('webburza.sylius.location_bundle.google_maps_key');
         $googleMapsEnabled = $this->getParameter('webburza.sylius.location_bundle.google_maps_enabled');
 
+        $googleMapUrl = $this->getGoogleMapUrl($location);
+
         return $this->render(
             'WebburzaSyliusLocationBundle:Frontend:show.html.twig',
             [
@@ -66,6 +69,7 @@ class LocationController extends Controller
                 'locationJson' => $serializer->serialize($location, 'json'),
                 'googleMapsEnabled' => $googleMapsEnabled,
                 'googleMapsKey' => $googleMapsKey,
+                'googleMapUrl' => $googleMapUrl
             ]
         );
     }
@@ -117,5 +121,15 @@ class LocationController extends Controller
                 ]
             );
         }
+    }
+
+    /**
+     * @param $location
+     */
+    protected function getGoogleMapUrl(Location $location)
+    {
+        $url = 'https://www.google.hr/maps/place/' . $location->getFullAddress() . '/@' . $location->getCoords() . ',17z';
+
+        return str_replace(' ', '+', $url);
     }
 }

@@ -1,13 +1,19 @@
 {% extends 'SyliusWebBundle:Frontend:layout.html.twig' %}
 
-{% block title %}{{ location.name }} {{ location.streetName ~ ' ' ~ location.streetNumber ~ ', ' ~ location.city }}{% endblock %}
-{% block type %}place{% endblock %}
+{% block title %}{{ location.name }} - {{ location.address }}{% endblock %}
+
+{% block head %}
+    <meta charset="UTF-8">
+    <title>{{ block('title') }}</title>
+    <meta name="description" content="{{ location.metaDescription }}">
+    <meta name="keywords" content="{{ location.metaKeywords }}">
+{% endblock %}
+
+{% block type %}{{ location.locationType.name }}{% endblock %}
 {% block extraOG %}
 <meta property="place:location:latitude" content="{{ location.latitude }}" />
 <meta property="place:location:longitude" content="{{ location.longitude }}" />
 {% endblock %}
-
-{% set googleMapURL = 'https://www.google.hr/maps/place/' ~ (location.streetName ~ '+' ~ location.streetNumber)|replace({' ':'+'}) ~ ',+' ~ location.zip ~ ',+' ~ location.city ~ '/@' ~ location.latitude ~ ',' ~ location.longitude ~ ',17z' %}
 
 {% block main %}
 <hr>
@@ -29,7 +35,7 @@
 
                             <div class="col-md-12">
                                 <div class="page-header">
-                                    <h1>{{ location.name }} - {{ location.streetName ~ ' ' ~ location.streetNumber ~ ', ' ~ location.city }}</h1>
+                                    <h1>{{ location.name }} - {{ location.fullAddress }}</h1>
                                 </div>
                                 <div class="row">
                                     <div class="col-md-3 col-sm-4">
@@ -38,10 +44,12 @@
                                                 <h2 class="panel-title">{{ 'webburza.sylius.location.frontend.contact' | trans }}</h2>
                                             </div>
                                             <div class="panel-body">
-                                                <p>{{ 'webburza.sylius.location.label.phone' | trans }}: <a href="tel:{{ location.phone|replace({'-' : '', ' ' : '', '/' : ''}) }}">{{ location.phone }}</a>
+                                                {% if location.phone %}
+                                                    <p>{{ 'webburza.sylius.location.label.phone' | trans }}: <a href="tel:{{ location.phone|replace({'-' : '', ' ' : '', '/' : ''}) }}">{{ location.phone }}</a>
+                                                {% endif %}
                                                 </p>
                                                 {% if location.email %}
-                                                <p>{{ 'webburza.sylius.location.label.email' | trans }}: <a href="mailto:{{ location.email }}">{{ location.email }}</a></p>
+                                                    <p>{{ 'webburza.sylius.location.label.email' | trans }}: <a href="mailto:{{ location.email }}">{{ location.email }}</a></p>
                                                 {% endif %}
                                             </div>
                                         </div>
@@ -82,25 +90,27 @@
 
                     <div class="col-md-12">
                         <p><a class="btn btn-success btn-sm" href="{{ path('webburza_location_frontend_index') }}"><i class="glyphicon glyphicon-chevron-left" role="presentation" aria-hidden="true"></i> {{ 'webburza.sylius.location.back_to_all' | trans }}</a></p>
-                        <hr>
                     </div>
                 </div>
 
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="Map Map--view">
-                            <div id="Map-holder"></div>
+                {% if googleMapsEnabled %}
+                    <div class="row">
+                        <div class="col-md-12">
+                            <hr>
+                            <div class="Map Map--view">
+                                <div id="Map-holder"></div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-12 text-center">
+                            <br>
+                            <a class="btn btn-sm btn-success" href="{{ googleMapUrl }}" target="_blank"><i class="glyphicon glyphicon-new-window" role="presentation" aria-hidden="true"></i> {{ 'webburza.sylius.location.frontend.open_in_gm' | trans }}</a>
                         </div>
                     </div>
-
-                </div>
-
-                <div class="row">
-                    <div class="col-md-12 text-center">
-                        <br>
-                        <a class="btn btn-sm btn-success" href="{{ googleMapURL }}" target="_blank"><i class="glyphicon glyphicon-new-window" role="presentation" aria-hidden="true"></i> {{ 'webburza.sylius.location.frontend.open_in_gm' | trans }}</a>
-                    </div>
-                </div>
+                {% endif %}
 
                 <script>
                     var loc = {{ locationJson | raw }};
@@ -130,7 +140,9 @@
 {% block javascripts %}
     {{ parent() }}
 
-    <script src="//maps.googleapis.com/maps/api/js?key={{ googleMapsKey }}"></script>
+    {% if googleMapsEnabled %}
+        <script src="//maps.googleapis.com/maps/api/js?key={{ googleMapsKey }}"></script>
+    {% endif %}
 
     {% javascripts '@WebburzaSyliusLocationBundle/Resources/public/js/location.js' %}
         <script type="text/javascript" src="{{ asset_url }}"></script>

@@ -16,50 +16,50 @@ class LocationTranslationType extends AbstractResourceType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('name', Type\TextType::class, [
+        $builder->add('name', 'text', [
             'label' => 'webburza.sylius.location.label.name',
         ]);
 
-        $builder->add('streetName', Type\TextType::class, [
+        $builder->add('streetName', 'text', [
             'label' => 'webburza.sylius.location.label.street_name',
         ]);
 
-        $builder->add('streetNumber', Type\TextType::class, [
+        $builder->add('streetNumber', 'text', [
             'label' => 'webburza.sylius.location.label.street_number',
         ]);
 
-        $builder->add('city', Type\TextType::class, [
+        $builder->add('city', 'text', [
             'label' => 'webburza.sylius.location.label.city',
         ]);
 
-        $builder->add('zip', Type\TextType::class, [
+        $builder->add('zip', 'text', [
             'label' => 'webburza.sylius.location.label.zip',
         ]);
 
-        $builder->add('state', Type\TextType::class, [
+        $builder->add('state', 'text', [
             'label' => 'webburza.sylius.location.label.state',
         ]);
 
-        $builder->add('country', Type\TextType::class, [
+        $builder->add('country', 'text', [
             'label' => 'webburza.sylius.location.label.country',
         ]);
 
-        $builder->add('workingHours', Type\TextareaType::class, [
+        $builder->add('workingHours', 'textarea', [
             'label' => 'webburza.sylius.location.label.working_hours',
             'attr' => ['rows' => 2],
         ]);
 
-        $builder->add('description', Type\TextareaType::class, [
+        $builder->add('description', 'textarea', [
             'label' => 'webburza.sylius.location.label.description',
             'attr' => ['rows' => 2],
         ]);
 
-        $builder->add('metaKeywords', Type\TextareaType::class, [
+        $builder->add('metaKeywords', 'textarea', [
             'label' => 'webburza.sylius.location.label.meta_keywords',
             'attr' => ['rows' => 2],
         ]);
 
-        $builder->add('metaDescription', Type\TextareaType::class, [
+        $builder->add('metaDescription', 'textarea', [
             'label' => 'webburza.sylius.location.label.meta_description',
             'attr' => ['rows' => 2],
         ]);

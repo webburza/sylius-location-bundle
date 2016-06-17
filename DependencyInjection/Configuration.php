@@ -26,12 +26,8 @@ class Configuration implements ConfigurationInterface
 
         $rootNode
             ->children()
-                ->booleanNode('google_maps_enabled')
-                    ->defaultFalse()
-                ->end()
-                ->scalarNode('google_maps_key')
-                    ->defaultValue('')
-                ->end()
+                ->booleanNode('google_maps_enabled')->end()
+                ->scalarNode('google_maps_key')->end()
             ->end();
 
         return $treeBuilder;

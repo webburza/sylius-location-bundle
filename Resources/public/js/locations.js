@@ -15,6 +15,7 @@
 
     $(function () {
 
+        var mapsLoaded = window.google && window.google.maps;
         var itemList = $('.LocationList');
         var search = {
             delay: 100,
@@ -24,15 +25,18 @@
         var map = {
             element: $('#Map-holder'),
             config: {
-                mapTypeId: google.maps.MapTypeId.ROADMAP,
+                mapTypeId: mapsLoaded && google.maps.MapTypeId.ROADMAP,
                 zoom: 16,
-                center: new google.maps.LatLng(0, 0)
+                center: mapsLoaded && new google.maps.LatLng(0, 0)
             },
             markers: [],
-            bounds: new google.maps.LatLngBounds(null)
+            bounds: mapsLoaded && new google.maps.LatLngBounds(null)
         };
 
         map.setActive = function (id) {
+            if (!map.instance) {
+                return;
+            }
             var marker = map.getMarkerById(id);
             if (!marker) {
                 return;
@@ -53,6 +57,9 @@
         };
 
         map.clear = function () {
+            if (!map.instance) {
+                return;
+            }
             $.each(map.markers, function () {
                 this.setMap(null);
             });
@@ -61,6 +68,9 @@
         };
 
         map.setMarkers = function () {
+            if (!map.instance) {
+                return;
+            }
             var items = itemList.find('.LocationList-item');
             items.on('click', function () {
                 var item = $(this);
@@ -127,21 +137,25 @@
 
                     map.clear();
 
+                    itemList.html(list.html());
+
                     if (items.length) {
-                        itemList.html(list.html());
                         map.setMarkers();
-                    } else {
-                        itemList.html('<div class="col-md-12"><p class="alert alert-danger">No locations found.</p></div>');
                     }
                 }
             });
         };
 
+        search.form.on('submit', function (e) {
+            e.preventDefault();
+            search.submit();
+        });
+
         search.form.find(':input').on('change keyup blur', function () {
             search.action();
         });
 
-        map.instance = new google.maps.Map(map.element.get(0), map.config);
+        map.instance = mapsLoaded && new google.maps.Map(map.element.get(0), map.config);
         map.setMarkers();
 
     });

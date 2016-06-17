@@ -2,7 +2,6 @@ sylius_resource:
     resources:
         webburza_location.location:
             classes:
-                controller: Webburza\Sylius\LocationBundle\Controller\Backend\LocationController
                 repository: Webburza\Sylius\LocationBundle\Doctrine\ORM\LocationRepository
                 model: Webburza\Sylius\LocationBundle\Entity\Location
                 form:
@@ -15,7 +14,6 @@ sylius_resource:
 
         webburza_location.location_type:
             classes:
-                controller: Webburza\Sylius\LocationBundle\Controller\Backend\LocationTypeController
                 model: Webburza\Sylius\LocationBundle\Entity\LocationType
                 form:
                     default: Webburza\Sylius\LocationBundle\Form\Type\LocationTypeType
@@ -28,7 +26,6 @@ sylius_resource:
         webburza_location.location_image:
             classes:
                 model: Webburza\Sylius\LocationBundle\Entity\LocationImage
-                controller: Webburza\Sylius\LocationBundle\Controller\Backend\LocationImageController
                 form:
                     default: Webburza\Sylius\LocationBundle\Form\Type\LocationImageType
 
@@ -42,5 +39,5 @@ assetic:
     bundles:        ['WebburzaSyliusLocationBundle']
 
 webburza_sylius_location:
-    google_maps_key: 'AIzaSyAuLK2q9XfxEFcsu_FQSwY_S0WDM_k_z0Y'
-    google_maps_enabled: true
+    google_maps_enabled: false
+    google_maps_key: 1234567890

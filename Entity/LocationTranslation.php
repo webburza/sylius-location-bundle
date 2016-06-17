@@ -3,8 +3,8 @@
 namespace Webburza\Sylius\LocationBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Sylius\Component\Resource\Model\AbstractTranslation;
 use Sylius\Component\Resource\Model\ResourceInterface;
-use Sylius\Component\Translation\Model\AbstractTranslation;
 use Symfony\Component\Validator\Constraints as Assert;
 use Gedmo\Mapping\Annotation as Gedmo;
 use JMS\Serializer\Annotation as JMS;

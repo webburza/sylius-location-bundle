@@ -7,7 +7,7 @@
             </div>
 
             <div class="well">
-                <form class="Location-search" action="/locations/search/" method="GET">
+                <form class="Location-search" action="{{ path('webburza_location_frontend_search') }}" method="GET">
                     <div class="col-md-12 form-group">
                         <label class="required" for="location-input">{{ 'webburza.sylius.location.frontend.city_place_street' | trans }}</label>
 
@@ -17,37 +17,40 @@
             </div>
 
             <div class="row">
-            {% if locations %}
 
                 <div class="LocationList clearfix">
-
-                {% for location in locations %}
-                    {% if location.published %}
-                    <div class="LocationList-item col-md-4 col-sm-4 col-xs-6" data-location-id="{{ location.id }}" data-location-lat="{{ location.latitude }}" data-location-lng="{{ location.longitude }}">
-                        <p>{{ location.locationType.name }}</p>
-                            <div class="panel panel-default">
-                                <div class="panel-heading">
-                                    <h3 class="panel-title">{{ location.name }}</h3>
-                                </div>
-                                <div class="panel-body">
-                                    <p class="LocationList-title">{{ location.streetName }} {{ location.streetNumber }}, {{ location.city }}, {{ location.country }}</p>
-
-                                    <p>{{ 'webburza.sylius.location.label.phone' | trans }}: <a href="tel:{{ location.phone|replace({'-' : '', ' ' : '', '/' : ''})|replace('+', '00') }}">{{ location.phone }}</a></p>
-
-                                    <div class="LocationList-workingHoursContainer clearfix">
-                                        <p class="LocationList-workingHours LocationList-workingHours-title">{{ 'webburza.sylius.location.label.working_hours' | trans }}: {{ location.workingHours|nl2br }}</p>
-
-                                        <a href="{{ path('webburza_location_frontend_show', {slug: location.slug}) }}" class="LocationList-link btn btn-success btn-sm">{{ 'webburza.sylius.location.frontend.details' | trans }}</a>
+                {% if locations %}
+                    {% for location in locations %}
+                        {% if location.published %}
+                        <div class="LocationList-item col-md-4 col-sm-4 col-xs-6" data-location-id="{{ location.id }}" data-location-lat="{{ location.latitude }}" data-location-lng="{{ location.longitude }}">
+                            <p>{{ location.locationType.name }}</p>
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <h3 class="panel-title">{{ location.name }}</h3>
                                     </div>
+                                    <div class="panel-body">
+                                        <p class="LocationList-title">{{ location.address }}</p>
 
+                                        {% if location.phone %}
+                                            <p>{{ 'webburza.sylius.location.label.phone' | trans }}: <a href="tel:{{ location.phone|replace({'-' : '', ' ' : '', '/' : ''})|replace('+', '00') }}">{{ location.phone }}</a></p>
+                                        {% endif %}
+
+                                        <div class="LocationList-workingHoursContainer clearfix">
+                                            <p class="LocationList-workingHours LocationList-workingHours-title">{{ 'webburza.sylius.location.label.working_hours' | trans }}: {{ location.workingHours|nl2br }}</p>
+
+                                            <a href="{{ path('webburza_location_frontend_show', {slug: location.slug}) }}" class="LocationList-link btn btn-success btn-sm">{{ 'webburza.sylius.location.frontend.details' | trans }}</a>
+                                        </div>
+
+                                    </div>
                                 </div>
-                            </div>
-                    </div>
-                    {% endif %}
-                {% endfor %}
+                        </div>
+                        {% endif %}
+                    {% endfor %}
+                {% else %}
+                    <div class="col-md-12"><p class="alert alert-danger">No locations found.</p></div>
+                {% endif %}
 
                 </div>
-            {% endif %}
             </div>
             <hr>
         </div>
