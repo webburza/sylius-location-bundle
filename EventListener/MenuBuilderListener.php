@@ -3,7 +3,7 @@
 namespace Webburza\Sylius\LocationBundle\EventListener;
 
 use Sylius\Bundle\WebBundle\Event\MenuBuilderEvent;
-use Symfony\Component\Translation\DataCollectorTranslator;
+use Symfony\Component\Translation\TranslatorInterface;
 use Symfony\Component\Translation\Translator;
 
 class MenuBuilderListener
@@ -16,9 +16,9 @@ class MenuBuilderListener
     /**
      * MenuBuilderListener constructor.
      *
-     * @param DataCollectorTranslator $translator
+     * @param TranslatorInterface $translator
      */
-    public function __construct(DataCollectorTranslator $translator)
+    public function __construct(TranslatorInterface $translator)
     {
         $this->translator = $translator;
     }
@@ -30,14 +30,14 @@ class MenuBuilderListener
     {
         $menu = $event->getMenu();
 
-        $menu['content']
+        $menu['assortment']
             ->addChild('webburza_sylius_locations', array(
                 'route' => 'webburza_location_location_index',
                 'labelAttributes' => array('icon' => 'glyphicon glyphicon-flag'),
             ))
             ->setLabel($this->translator->trans('webburza.sylius.location.backend.locations'));
 
-        $menu['content']
+        $menu['assortment']
             ->addChild('webburza_sylius_location_types', array(
                 'route' => 'webburza_location_location_type_index',
                 'labelAttributes' => array('icon' => 'glyphicon glyphicon-cog'),

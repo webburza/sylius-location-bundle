@@ -22,8 +22,8 @@ class WebburzaSyliusLocationExtension extends Extension
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
 
-        $container->setParameter('webburza.sylius.location_bundle.google_maps_key', $config['google_maps_key']);
         $container->setParameter('webburza.sylius.location_bundle.google_maps_enabled', $config['google_maps_enabled']);
+        $container->setParameter('webburza.sylius.location_bundle.google_maps_key', $config['google_maps_key']);
 
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.yml');

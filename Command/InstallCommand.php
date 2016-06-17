@@ -3,6 +3,7 @@
 namespace Webburza\Sylius\LocationBundle\Command;
 
 use Sylius\Component\Rbac\Model\Permission;
+use Sylius\Component\Rbac\Model\PermissionInterface;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -51,7 +52,7 @@ class InstallCommand extends ContainerAwareCommand
         }
 
         $queries = [
-            'CREATE TABLE webburza_sylius_location (id INT AUTO_INCREMENT NOT NULL, location_type INT DEFAULT NULL, published TINYINT(1) NOT NULL, internal_name VARCHAR(255) NOT NULL, phone VARCHAR(255) DEFAULT NULL, email VARCHAR(255) DEFAULT NULL, latitude VARCHAR(20) DEFAULT NULL, longitude VARCHAR(20) DEFAULT NULL, created_at DATETIME NOT NULL, updated_at DATETIME DEFAULT NULL, INDEX IDX_B50D566DCDAE269 (location_type), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB',
+            'CREATE TABLE webburza_sylius_location (id INT AUTO_INCREMENT NOT NULL, location_type INT DEFAULT NULL, published TINYINT(1) NOT NULL, internal_name VARCHAR(255) NOT NULL, phone VARCHAR(255) DEFAULT NULL, email VARCHAR(255) DEFAULT NULL, latitude DECIMAL (10,8) DEFAULT NULL, longitude DECIMAL(10,8) DEFAULT NULL, created_at DATETIME NOT NULL, updated_at DATETIME DEFAULT NULL, INDEX IDX_B50D566DCDAE269 (location_type), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB',
             'CREATE TABLE webburza_sylius_location_image (id INT AUTO_INCREMENT NOT NULL, location_id INT NOT NULL, path VARCHAR(255) NOT NULL, created_at DATETIME NOT NULL, updated_at DATETIME DEFAULT NULL, INDEX IDX_7DC32A0A64D218E (location_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB',
             'CREATE TABLE webburza_sylius_location_translation (id INT AUTO_INCREMENT NOT NULL, translatable_id INT NOT NULL, name VARCHAR(255) DEFAULT NULL, slug VARCHAR(255) DEFAULT NULL, street_name VARCHAR(255) DEFAULT NULL, street_number VARCHAR(255) DEFAULT NULL, city VARCHAR(255) DEFAULT NULL, zip VARCHAR(20) DEFAULT NULL, state VARCHAR(255) DEFAULT NULL, country VARCHAR(255) DEFAULT NULL, working_hours LONGTEXT DEFAULT NULL, description LONGTEXT DEFAULT NULL, meta_keywords LONGTEXT DEFAULT NULL, meta_description LONGTEXT DEFAULT NULL, locale VARCHAR(255) NOT NULL, INDEX IDX_3B2F83722C2AC5D3 (translatable_id), UNIQUE INDEX webburza_sylius_location_translation_uniq_trans (translatable_id, locale), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB',
             'CREATE TABLE webburza_sylius_location_type (id INT AUTO_INCREMENT NOT NULL, created_at DATETIME NOT NULL, updated_at DATETIME DEFAULT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB',
@@ -81,12 +82,12 @@ class InstallCommand extends ContainerAwareCommand
     {
         $repository = $this->getContainer()->get('sylius.repository.permission');
 
-        // Get parent node (used for content)
-        $contentPermission = $repository->findOneBy(['code' => 'sylius.content']);
+        // Get parent node (used for catalog)
+        $catalogPermission = $repository->findOneBy(['code' => 'sylius.catalog']);
 
         // Create permissions
-        $locationManagePermission = $this->createLocationPermissions($contentPermission);
-        $locationTypeManagePermission = $this->createLocationTypePermissions($contentPermission);
+        $locationManagePermission = $this->createLocationPermissions($catalogPermission);
+        $locationTypeManagePermission = $this->createLocationTypePermissions($catalogPermission);
 
         // Persist the permissions
         $manager->persist($locationManagePermission);
@@ -97,11 +98,11 @@ class InstallCommand extends ContainerAwareCommand
     /**
      * Create permissions for Location resource.
      *
-     * @param Permission $parentPermission
+     * @param PermissionInterface $parentPermission
      *
-     * @return Permission
+     * @return PermissionInterface
      */
-    private function createLocationPermissions($parentPermission)
+    private function createLocationPermissions(PermissionInterface $parentPermission)
     {
         // Create main permissions node
         $managePermission = new Permission();
@@ -134,11 +135,11 @@ class InstallCommand extends ContainerAwareCommand
     /**
      * Create permissions for Location Type resource.
      *
-     * @param Permission $parentPermission
+     * @param PermissionInterface $parentPermission
      *
-     * @return Permission
+     * @return PermissionInterface
      */
-    private function createLocationTypePermissions(Permission $parentPermission)
+    private function createLocationTypePermissions(PermissionInterface $parentPermission)
     {
         // Create main permissions node
         $managePermission = new Permission();

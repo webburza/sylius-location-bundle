@@ -6,6 +6,8 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Sylius\Component\Resource\Model\ResourceInterface;
+use Sylius\Component\Resource\Model\TranslatableInterface;
+use Sylius\Component\Resource\Model\TranslatableTrait;
 use Sylius\Component\Translation\Model\AbstractTranslatable;
 use Sylius\Component\Translation\Model\TranslationInterface;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -18,8 +20,12 @@ use JMS\Serializer\Annotation as JMS;
  * @ORM\Entity()
  * @JMS\ExclusionPolicy("all")
  */
-class Location extends AbstractTranslatable implements ResourceInterface
+class Location implements ResourceInterface, TranslatableInterface
 {
+    use TranslatableTrait {
+        __construct as private initializeTranslationsCollection;
+    }
+
     /**
      * @var int
      *
@@ -74,7 +80,7 @@ class Location extends AbstractTranslatable implements ResourceInterface
     /**
      * @var string
      *
-     * @ORM\Column(name="latitude", type="string", length=20)
+     * @ORM\Column(name="latitude", type="decimal", precision=10, scale=8)
      * @JMS\Expose()
      */
     protected $latitude;
@@ -82,7 +88,7 @@ class Location extends AbstractTranslatable implements ResourceInterface
     /**
      * @var string
      *
-     * @ORM\Column(name="longitude", type="string", length=20)
+     * @ORM\Column(name="longitude", type="decimal", precision=10, scale=8)
      * @JMS\Expose()
      */
     protected $longitude;
@@ -111,19 +117,11 @@ class Location extends AbstractTranslatable implements ResourceInterface
     protected $updatedAt;
 
     /**
-     * @var TranslationInterface[]
-     * @Assert\Valid()
-     * @JMS\Expose()
-     */
-    protected $translations;
-
-    /**
      * Location constructor.
      */
     public function __construct()
     {
-        parent::__construct();
-
+        $this->initializeTranslationsCollection();
         $this->images = new ArrayCollection();
     }
 
@@ -239,30 +237,6 @@ class Location extends AbstractTranslatable implements ResourceInterface
     public function setEmail($email)
     {
         $this->email = $email;
-    }
-
-    /**
-     * Set googleMapsLink.
-     *
-     * @param string $googleMapsLink
-     *
-     * @return Location
-     */
-    public function setGoogleMapsLink($googleMapsLink)
-    {
-        $this->googleMapsLink = $googleMapsLink;
-
-        return $this;
-    }
-
-    /**
-     * Get googleMapsLink.
-     *
-     * @return string
-     */
-    public function getGoogleMapsLink()
-    {
-        return $this->googleMapsLink;
     }
 
     /**
@@ -510,5 +484,67 @@ class Location extends AbstractTranslatable implements ResourceInterface
     public function getMetaDescription()
     {
         return $this->translate()->getMetaDescription();
+    }
+
+    /**
+     * @return string
+     */
+    public function getStreetAddress()
+    {
+        $streetAddress = $this->getStreetName() . ' ' . $this->getStreetNumber();
+
+        return trim($streetAddress);
+    }
+
+    /**
+     * @return string
+     */
+    public function getAddress()
+    {
+        $address = '';
+
+        $fragments = [
+            $this->getStreetAddress(),
+            $this->getCity()
+        ];
+
+        foreach ($fragments as $fragment) {
+            if ($fragment) {
+                $address .= ', ' . $fragment;
+            }
+        }
+
+        return trim($address, ', ');
+    }
+
+    /**
+     * @return string
+     */
+    public function getFullAddress()
+    {
+        $address = '';
+
+        $fragments = [
+            $this->getStreetAddress(),
+            $this->getZip(),
+            $this->getCity(),
+            $this->getCountry()
+        ];
+
+        foreach ($fragments as $fragment) {
+            if ($fragment) {
+                $address .= ', ' . $fragment;
+            }
+        }
+
+        return trim($address, ', ');
+    }
+
+    /**
+     * @return string
+     */
+    public function getCoords()
+    {
+        return $this->getLatitude() . ',' . $this->getLongitude();
     }
 }

@@ -7,6 +7,13 @@ use Sylius\Bundle\ResourceBundle\Doctrine\ORM\EntityRepository;
 
 class LocationRepository extends EntityRepository implements RepositoryInterface
 {
+    /**
+     * Find a public location by search query.
+     *
+     * @param $query
+     * @param $locale
+     * @return array
+     */
     public function findPublicByQuery($query, $locale)
     {
         $queryBuilder = $this->createQueryBuilder('loc');

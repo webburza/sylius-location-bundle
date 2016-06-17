@@ -16,7 +16,7 @@ class LocationTypeTranslationType extends AbstractResourceType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('name', Type\TextType::class, [
+        $builder->add('name', 'text', [
             'label' => 'webburza.sylius.location_type.label.name',
         ]);
     }
