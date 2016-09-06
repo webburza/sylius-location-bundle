@@ -35,36 +35,40 @@
 
                             <div class="col-md-12">
                                 <div class="page-header">
-                                    <h1>{{ location.name }} - {{ location.fullAddress }}</h1>
+                                    <h1>{{ location.name }} {{ location.fullAddress ? ' - ' ~ location.fullAddress : '' }}</h1>
                                 </div>
                                 <div class="row">
-                                    <div class="col-md-3 col-sm-4">
-                                        <div class="panel panel-default">
-                                            <div class="panel-heading">
-                                                <h2 class="panel-title">{{ 'webburza.sylius.location.frontend.contact' | trans }}</h2>
-                                            </div>
-                                            <div class="panel-body">
-                                                {% if location.phone %}
-                                                    <p>{{ 'webburza.sylius.location.label.phone' | trans }}: <a href="tel:{{ location.phone|replace({'-' : '', ' ' : '', '/' : ''}) }}">{{ location.phone }}</a>
-                                                {% endif %}
-                                                </p>
-                                                {% if location.email %}
-                                                    <p>{{ 'webburza.sylius.location.label.email' | trans }}: <a href="mailto:{{ location.email }}">{{ location.email }}</a></p>
-                                                {% endif %}
+                                    {% if location.phone or location.email %}
+                                        <div class="col-md-3 col-sm-4">
+                                            <div class="panel panel-default">
+                                                <div class="panel-heading">
+                                                    <h2 class="panel-title">{{ 'webburza.sylius.location.frontend.contact' | trans }}</h2>
+                                                </div>
+                                                <div class="panel-body">
+                                                    {% if location.phone %}
+                                                        <p>{{ 'webburza.sylius.location.label.phone' | trans }}: <a href="tel:{{ location.phone|replace({'-' : '', ' ' : '', '/' : ''}) }}">{{ location.phone }}</a>
+                                                    {% endif %}
+                                                    </p>
+                                                    {% if location.email %}
+                                                        <p>{{ 'webburza.sylius.location.label.email' | trans }}: <a href="mailto:{{ location.email }}">{{ location.email }}</a></p>
+                                                    {% endif %}
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
+                                    {% endif %}
 
-                                    <div class="col-md-3 col-sm-4">
-                                        <div class="panel panel-default">
-                                            <div class="panel-heading">
-                                                <h2 class="panel-title">{{ 'webburza.sylius.location.label.working_hours' | trans }}</h2>
-                                            </div>
-                                            <div class="panel-body">
-                                                <p>{{ location.workingHours|nl2br }}</p>
+                                    {% if location.workingHours %}
+                                        <div class="col-md-3 col-sm-4">
+                                            <div class="panel panel-default">
+                                                <div class="panel-heading">
+                                                    <h2 class="panel-title">{{ 'webburza.sylius.location.label.working_hours' | trans }}</h2>
+                                                </div>
+                                                <div class="panel-body">
+                                                    <p>{{ location.workingHours|nl2br }}</p>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
+                                    {% endif %}
                                 </div>
                             </div>
                         </div>

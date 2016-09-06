@@ -14,12 +14,16 @@
         {
             "name": "Tin Benjamin Matuka",
             "email": "tin@burza.hr"
+        },
+        {
+            "name": "Yousef Chanan",
+            "email": "yousef@burza.hr"
         }
     ],
     "autoload": {
         "psr-4": { "Webburza\\Sylius\\LocationBundle\\": "" }
     },
     "require": {
-        "sylius/core": "^0.18"
+        "sylius/core": "^0.19"
     }
 }

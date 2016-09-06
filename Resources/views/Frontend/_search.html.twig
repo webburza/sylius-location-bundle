@@ -36,7 +36,9 @@
                                         {% endif %}
 
                                         <div class="LocationList-workingHoursContainer clearfix">
-                                            <p class="LocationList-workingHours LocationList-workingHours-title">{{ 'webburza.sylius.location.label.working_hours' | trans }}: {{ location.workingHours|nl2br }}</p>
+                                            {% if location.workingHours %}
+                                                <p class="LocationList-workingHours LocationList-workingHours-title">{{ 'webburza.sylius.location.label.working_hours' | trans }}: {{ location.workingHours|nl2br }}</p>
+                                            {% endif %}
 
                                             <a href="{{ path('webburza_location_frontend_show', {slug: location.slug}) }}" class="LocationList-link btn btn-success btn-sm">{{ 'webburza.sylius.location.frontend.details' | trans }}</a>
                                         </div>
@@ -52,10 +54,10 @@
 
                 </div>
             </div>
-            <hr>
         </div>
         {% if googleMapsEnabled and googleMapsKey %}
         <div class="col-md-12">
+            <hr>
             <div class="Map Map--listing">
                 <div id="Map-holder"></div>
             </div>
