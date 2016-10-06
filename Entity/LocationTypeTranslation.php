@@ -5,7 +5,6 @@ namespace Webburza\Sylius\LocationBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Sylius\Component\Resource\Model\AbstractTranslation;
 use Sylius\Component\Resource\Model\ResourceInterface;
-use Symfony\Component\Validator\Constraints as Assert;
 use Gedmo\Mapping\Annotation as Gedmo;
 use JMS\Serializer\Annotation as JMS;
 
@@ -31,8 +30,7 @@ class LocationTypeTranslation extends AbstractTranslation implements ResourceInt
     /**
      * @var string
      *
-     * @ORM\Column(name="name", type="string", length=255, nullable=true)
-     * @Assert\NotBlank()
+     * @ORM\Column(name="name", type="string", length=255)
      * @JMS\Expose()
      */
     protected $name;

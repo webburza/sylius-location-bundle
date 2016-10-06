@@ -1,3 +1,12 @@
+webburza_location:
+    ui:
+        locations: Locations
+        location_types: Location types
+        new_location_type: New location type
+        edit_location_type: Edit location type
+        new_location: New location
+        edit_location: Edit location
+
 webburza:
     sylius:
         location:
@@ -24,6 +33,7 @@ webburza:
             general_info: General info
             back_to_all: Back to all locations
             delete_image: Delete image
+            address: Address
             label:
                 id: '#ID'
                 name: Name

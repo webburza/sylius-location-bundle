@@ -1,0 +1,45 @@
+sylius_grid:
+    grids:
+        webburza_location_location:
+            driver:
+                name: doctrine/orm
+                options:
+                    class: "%webburza_location.model.location.class%"
+                    repository:
+                        method: createListQueryBuilder
+            filters:
+                internal_name:
+                    type: string
+                    label: webburza.sylius.location.label.internal_name
+                    options:
+                        fields: [internalName]
+                name:
+                    type: string
+                    label: webburza.sylius.location.label.name
+                    options:
+                        fields: [translation.name]
+            fields:
+                name:
+                    type: string
+                    label: webburza.sylius.location.label.name
+                address:
+                    type: string
+                    label: webburza.sylius.location.address
+                location_type:
+                    path: location_type.name
+                    type: string
+                    label: webburza.sylius.location.label.type
+                published:
+                    type: twig
+                    label: sylius.ui.enabled
+                    options:
+                        template: SyliusAdminBundle:Grid/Field:enabled.html.twig
+            actions:
+                main:
+                    create:
+                        type: create
+                item:
+                    update:
+                        type: update
+                    delete:
+                        type: delete

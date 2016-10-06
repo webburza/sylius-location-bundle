@@ -1,3 +1,7 @@
+imports:
+    - { resource: grids/location.yml }
+    - { resource: grids/location_type.yml }
+
 sylius_resource:
     resources:
         webburza_location.location:
@@ -14,6 +18,7 @@ sylius_resource:
 
         webburza_location.location_type:
             classes:
+                repository: Webburza\Sylius\LocationBundle\Doctrine\ORM\LocationTypeRepository
                 model: Webburza\Sylius\LocationBundle\Entity\LocationType
                 form:
                     default: Webburza\Sylius\LocationBundle\Form\Type\LocationTypeType
@@ -35,9 +40,5 @@ liip_imagine:
             filters:
                 thumbnail: { size: [255, 255] }
 
-assetic:
-    bundles:        ['WebburzaSyliusLocationBundle']
-
-webburza_sylius_location:
-    google_maps_enabled: false
-    google_maps_key: 1234567890
+#assetic:
+#    bundles:        ['WebburzaSyliusLocationBundle']

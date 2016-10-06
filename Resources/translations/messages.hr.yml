@@ -1,3 +1,12 @@
+webburza_location:
+    ui:
+        locations: Lokacije
+        location_types: Vrste lokacija
+        new_location_type: Nova vrsta
+        edit_location_type: Uređivanje vrste
+        new_location: Nova lokacija
+        edit_location: Uređivanje lokacije
+
 webburza:
     sylius:
         location:
@@ -24,6 +33,7 @@ webburza:
             general_info: Općenite informacije
             back_to_all: Natrag na sve lokacije
             delete_image: Izbriši sliku
+            address: Adresa
             label:
                 id: '#ID'
                 name: Naziv

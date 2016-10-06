@@ -10,7 +10,6 @@ use Sylius\Component\Resource\Model\TranslatableInterface;
 use Sylius\Component\Resource\Model\TranslatableTrait;
 use Sylius\Component\Translation\Model\AbstractTranslatable;
 use Sylius\Component\Translation\Model\TranslationInterface;
-use Symfony\Component\Validator\Constraints as Assert;
 use JMS\Serializer\Annotation as JMS;
 
 /**
@@ -41,13 +40,12 @@ class Location implements ResourceInterface, TranslatableInterface
      *
      * @ORM\Column(name="published", type="boolean")
      */
-    protected $published;
+    protected $published = false;
 
     /**
      * @var string
      *
      * @ORM\Column(name="internal_name", type="string", length=255)
-     * @Assert\NotBlank()
      */
     protected $internalName;
 
@@ -55,7 +53,6 @@ class Location implements ResourceInterface, TranslatableInterface
      * @var LocationType
      * @ORM\ManyToOne(targetEntity="LocationType")
      * @ORM\JoinColumn(name="location_type")
-     * @Assert\NotBlank()
      * @JMS\Expose()
      */
     protected $locationType;
@@ -63,7 +60,7 @@ class Location implements ResourceInterface, TranslatableInterface
     /**
      * @var string
      *
-     * @ORM\Column(name="phone", type="string", length=255)
+     * @ORM\Column(name="phone", type="string", length=255, nullable=true)
      * @JMS\Expose()
      */
     protected $phone;
@@ -72,7 +69,6 @@ class Location implements ResourceInterface, TranslatableInterface
      * @var string
      *
      * @ORM\Column(name="email", type="string", length=255, nullable=true)
-     * @Assert\Email()
      * @JMS\Expose()
      */
     protected $email;
@@ -80,7 +76,7 @@ class Location implements ResourceInterface, TranslatableInterface
     /**
      * @var string
      *
-     * @ORM\Column(name="latitude", type="decimal", precision=10, scale=8)
+     * @ORM\Column(name="latitude", type="decimal", precision=10, scale=8, nullable=true)
      * @JMS\Expose()
      */
     protected $latitude;
@@ -88,7 +84,7 @@ class Location implements ResourceInterface, TranslatableInterface
     /**
      * @var string
      *
-     * @ORM\Column(name="longitude", type="decimal", precision=10, scale=8)
+     * @ORM\Column(name="longitude", type="decimal", precision=10, scale=8, nullable=true)
      * @JMS\Expose()
      */
     protected $longitude;

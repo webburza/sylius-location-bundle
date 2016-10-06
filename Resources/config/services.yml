@@ -1,10 +1,8 @@
 services:
     webburza_location.listener.menu_builder:
-        class: Webburza\Sylius\LocationBundle\EventListener\MenuBuilderListener
-        arguments: [@translator]
+        class: Webburza\Sylius\LocationBundle\EventListener\AdminMenuBuilderListener
         tags:
-            - { name: kernel.event_listener, event: sylius.menu_builder.backend.main, method: addBackendMenuItems }
-            - { name: kernel.event_listener, event: sylius.menu_builder.backend.sidebar, method: addBackendMenuItems }
+            - { name: kernel.event_listener, event: sylius.menu.admin.main, method: addMenuItems }
 
     webburza_location.listener.front_menu_builder:
         class: Webburza\Sylius\LocationBundle\EventListener\FrontendMenuBuilderListener

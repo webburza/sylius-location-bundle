@@ -5,6 +5,7 @@ namespace Webburza\Sylius\LocationBundle\Form\Type;
 use Sylius\Bundle\ResourceBundle\Form\Type\AbstractResourceType;
 use Symfony\Component\Form\Extension\Core\Type;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 class LocationTranslationType extends AbstractResourceType
 {
@@ -18,6 +19,9 @@ class LocationTranslationType extends AbstractResourceType
     {
         $builder->add('name', 'text', [
             'label' => 'webburza.sylius.location.label.name',
+            'constraints' => [
+                new NotBlank()
+            ]
         ]);
 
         $builder->add('streetName', 'text', [

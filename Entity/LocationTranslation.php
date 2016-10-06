@@ -5,7 +5,6 @@ namespace Webburza\Sylius\LocationBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Sylius\Component\Resource\Model\AbstractTranslation;
 use Sylius\Component\Resource\Model\ResourceInterface;
-use Symfony\Component\Validator\Constraints as Assert;
 use Gedmo\Mapping\Annotation as Gedmo;
 use JMS\Serializer\Annotation as JMS;
 
@@ -31,8 +30,7 @@ class LocationTranslation extends AbstractTranslation implements ResourceInterfa
     /**
      * @var string
      *
-     * @ORM\Column(name="name", type="string", length=255, nullable=true)
-     * @Assert\NotBlank()
+     * @ORM\Column(name="name", type="string", length=255)
      * @JMS\Expose()
      */
     protected $name;
@@ -49,7 +47,7 @@ class LocationTranslation extends AbstractTranslation implements ResourceInterfa
     /**
      * @var string
      *
-     * @ORM\Column(name="street_name", type="string", length=255)
+     * @ORM\Column(name="street_name", type="string", length=255, nullable=true)
      * @JMS\Expose()
      */
     protected $streetName;
@@ -57,7 +55,7 @@ class LocationTranslation extends AbstractTranslation implements ResourceInterfa
     /**
      * @var string
      *
-     * @ORM\Column(name="street_number", type="string", length=255)
+     * @ORM\Column(name="street_number", type="string", length=255, nullable=true)
      * @JMS\Expose()
      */
     protected $streetNumber;
@@ -65,7 +63,7 @@ class LocationTranslation extends AbstractTranslation implements ResourceInterfa
     /**
      * @var string
      *
-     * @ORM\Column(name="city", type="string", length=255)
+     * @ORM\Column(name="city", type="string", length=255, nullable=true)
      * @JMS\Expose()
      */
     protected $city;
@@ -73,7 +71,7 @@ class LocationTranslation extends AbstractTranslation implements ResourceInterfa
     /**
      * @var string
      *
-     * @ORM\Column(name="zip", type="string", length=20)
+     * @ORM\Column(name="zip", type="string", length=20, nullable=true)
      * @JMS\Expose()
      */
     protected $zip;
@@ -81,7 +79,7 @@ class LocationTranslation extends AbstractTranslation implements ResourceInterfa
     /**
      * @var string
      *
-     * @ORM\Column(name="state", type="string", length=255)
+     * @ORM\Column(name="state", type="string", length=255, nullable=true)
      * @JMS\Expose()
      */
     protected $state;
@@ -89,7 +87,7 @@ class LocationTranslation extends AbstractTranslation implements ResourceInterfa
     /**
      * @var string
      *
-     * @ORM\Column(name="country", type="string", length=255)
+     * @ORM\Column(name="country", type="string", length=255, nullable=true)
      * @JMS\Expose()
      */
     protected $country;
@@ -97,14 +95,14 @@ class LocationTranslation extends AbstractTranslation implements ResourceInterfa
     /**
      * @var string
      *
-     * @ORM\Column(name="working_hours", type="text")
+     * @ORM\Column(name="working_hours", type="text", nullable=true)
      * @JMS\Expose()
      */
     protected $workingHours;
 
     /**
      * @var string
-     * 
+     *
      * @ORM\Column(name="description", type="text", nullable=true)
      * @JMS\Expose()
      */

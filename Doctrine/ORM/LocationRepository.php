@@ -8,6 +8,17 @@ use Sylius\Bundle\ResourceBundle\Doctrine\ORM\EntityRepository;
 class LocationRepository extends EntityRepository implements RepositoryInterface
 {
     /**
+     * {@inheritdoc}
+     */
+    public function createListQueryBuilder()
+    {
+        return $this->createQueryBuilder('o')
+                    ->addSelect('translation')
+                    ->leftJoin('o.translations', 'translation')
+            ;
+    }
+
+    /**
      * Find a public location by search query.
      *
      * @param $query

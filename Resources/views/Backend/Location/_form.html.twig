@@ -1,0 +1,67 @@
+<div class="ui segment">
+    {{ form_errors(form) }}
+
+    <div class="ui two column stackable grid">
+        <div class="column">
+            <div class="two fields">
+                {{ form_row(form.internalName) }}
+                {{ form_row(form.locationType) }}
+            </div>
+
+            <div class="two fields">
+                {{ form_row(form.phone) }}
+                {{ form_row(form.email) }}
+            </div>
+
+            <div class="two fields">
+                {{ form_row(form.latitude) }}
+                {{ form_row(form.longitude) }}
+            </div>
+
+            <div class="ui segment">
+                {{ form_row(form.images) }}
+            </div>
+
+            {{ form_row(form.published) }}
+        </div>
+
+        <div class="column">
+            <div class="ui styled fluid accordion">
+                {% for locale, translationForm in form.translations %}
+                    <div class="title{% if 0 == loop.index0 %} active{% endif %}">
+                        <i class="dropdown icon"></i>
+                        <i class="{{ locale|slice(3, 2)|lower }} flag"></i> {{ locale|sylius_locale_name }}
+                    </div>
+                    <div class="content{% if 0 == loop.index0 %} active{% endif %}">
+                        {{ form_row(translationForm.name) }}
+
+                        {{ form_row(translationForm.description) }}
+                        {{ form_row(translationForm.workingHours) }}
+
+                        <div class="two fields">
+                            {{ form_row(translationForm.streetName) }}
+                            {{ form_row(translationForm.streetNumber) }}
+                        </div>
+
+                        <div class="two fields">
+                            {{ form_row(translationForm.city) }}
+                            {{ form_row(translationForm.zip) }}
+                        </div>
+
+                        <div class="two fields">
+                            {{ form_row(translationForm.state) }}
+                            {{ form_row(translationForm.country) }}
+                        </div>
+
+                        <div class="two fields">
+                            {{ form_row(translationForm.metaKeywords) }}
+                            {{ form_row(translationForm.metaDescription) }}
+                        </div>
+
+                        {{ form_rest(translationForm) }}
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>

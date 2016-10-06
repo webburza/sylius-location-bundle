@@ -5,6 +5,8 @@ namespace Webburza\Sylius\LocationBundle\Form\Type;
 use Sylius\Bundle\ResourceBundle\Form\Type\AbstractResourceType;
 use Symfony\Component\Form\Extension\Core\Type;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Validator\Constraints\Email;
+use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Valid;
 
 class LocationType extends AbstractResourceType
@@ -13,26 +15,29 @@ class LocationType extends AbstractResourceType
      * Build the Location form.
      *
      * @param FormBuilderInterface $builder
-     * @param array                $options
+     * @param array $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('translations', 'sylius_translations', [
-            'type' => 'webburza_location_location_translation',
-            'label' => 'webburza.sylius.location.translations',
+            'type'        => 'webburza_location_location_translation',
+            'label'       => 'webburza.sylius.location.translations',
             'constraints' => [
                 new Valid()
             ]
         ]);
 
         $builder->add('images', 'collection', [
-            'label' => 'webburza.sylius.location.label.images',
+            'label'      => 'webburza.sylius.location.label.images',
             'entry_type' => 'webburza_location_location_image',
-            'allow_add' => true,
+            'allow_add'  => true,
         ]);
 
         $builder->add('internalName', 'text', [
-            'label' => 'webburza.sylius.location.label.internal_name',
+            'label'       => 'webburza.sylius.location.label.internal_name',
+            'constraints' => [
+                new NotBlank()
+            ]
         ]);
 
         $builder->add('phone', 'text', [
@@ -40,7 +45,10 @@ class LocationType extends AbstractResourceType
         ]);
 
         $builder->add('email', 'text', [
-            'label' => 'webburza.sylius.location.label.email',
+            'label'       => 'webburza.sylius.location.label.email',
+            'constraints' => [
+                new Email()
+            ]
         ]);
 
         $builder->add('latitude', 'text', [
@@ -52,7 +60,10 @@ class LocationType extends AbstractResourceType
         ]);
 
         $builder->add('locationType', 'webburza_location_location_type_choice', [
-            'label' => 'webburza.sylius.location.label.type',
+            'label'       => 'webburza.sylius.location.label.type',
+            'constraints' => [
+                new NotBlank()
+            ]
         ]);
 
         $builder->add('published', 'checkbox', [
