@@ -24,6 +24,6 @@
         "psr-4": { "Webburza\\Sylius\\LocationBundle\\": "" }
     },
     "require": {
-        "sylius/core": "^0.19"
+        "sylius/core": "^1.0@dev"
     }
 }
