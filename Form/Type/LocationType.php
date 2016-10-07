@@ -28,9 +28,11 @@ class LocationType extends AbstractResourceType
         ]);
 
         $builder->add('images', 'collection', [
-            'label'      => 'webburza.sylius.location.label.images',
-            'entry_type' => 'webburza_location_location_image',
-            'allow_add'  => true,
+            'type'         => 'webburza_location_location_image',
+            'allow_add'    => true,
+            'allow_delete' => true,
+            'by_reference' => false,
+            'label'        => 'webburza.sylius.location.label.images',
         ]);
 
         $builder->add('internalName', 'text', [

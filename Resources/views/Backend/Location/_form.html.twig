@@ -1,3 +1,9 @@
+{% form_theme form with ['@SyliusUi/Form/theme.html.twig', _self] %}
+
+{% block webburza_location_location_image_widget %}
+    {{ block('sylius_image_widget') }}
+{% endblock %}
+
 <div class="ui segment">
     {{ form_errors(form) }}
 
