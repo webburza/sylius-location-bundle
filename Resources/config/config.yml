@@ -40,5 +40,10 @@ liip_imagine:
             filters:
                 thumbnail: { size: [255, 255] }
 
+doctrine:
+    orm:
+        resolve_target_entities:
+            Webburza\Sylius\LocationBundle\Entity\LocationInterface: %webburza_location.model.location.class%
+
 #assetic:
 #    bundles:        ['WebburzaSyliusLocationBundle']

@@ -19,7 +19,7 @@ use JMS\Serializer\Annotation as JMS;
  * @ORM\Entity()
  * @JMS\ExclusionPolicy("all")
  */
-class Location implements ResourceInterface, TranslatableInterface
+class Location implements LocationInterface
 {
     use TranslatableTrait {
         __construct as private initializeTranslationsCollection;
