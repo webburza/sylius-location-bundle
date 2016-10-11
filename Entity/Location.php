@@ -76,7 +76,7 @@ class Location implements LocationInterface
     /**
      * @var string
      *
-     * @ORM\Column(name="latitude", type="decimal", precision=10, scale=8, nullable=true)
+     * @ORM\Column(name="latitude", type="decimal", precision=11, scale=8, nullable=true)
      * @JMS\Expose()
      */
     protected $latitude;
@@ -84,7 +84,7 @@ class Location implements LocationInterface
     /**
      * @var string
      *
-     * @ORM\Column(name="longitude", type="decimal", precision=10, scale=8, nullable=true)
+     * @ORM\Column(name="longitude", type="decimal", precision=11, scale=8, nullable=true)
      * @JMS\Expose()
      */
     protected $longitude;
