@@ -16,7 +16,7 @@ use Sylius\Component\Resource\Model\TranslatableTrait;
  * @ORM\Entity()
  * @JMS\ExclusionPolicy("all")
  */
-class LocationType implements ResourceInterface, TranslatableInterface
+class LocationType implements LocationTypeInterface
 {
     use TranslatableTrait {
         __construct as private initializeTranslationsCollection;
@@ -74,6 +74,14 @@ class LocationType implements ResourceInterface, TranslatableInterface
     public function getName()
     {
         return $this->translate()->getName();
+    }
+
+    /**
+     * @param $name
+     */
+    public function setName($name)
+    {
+        $this->translate()->setName($name);
     }
 
     /**
