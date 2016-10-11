@@ -78,6 +78,7 @@ webburza:
             label:
                 id: '#ID'
                 name: Name
+                code: Code
                 published: Published?
                 created_at: Created At
                 updated_at: Updated At

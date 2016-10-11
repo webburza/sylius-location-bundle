@@ -6,6 +6,7 @@ use Sylius\Bundle\ResourceBundle\Form\Type\AbstractResourceType;
 use Symfony\Component\Form\Extension\Core\Type;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints\Valid;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 class LocationTypeType extends AbstractResourceType
 {
@@ -22,6 +23,13 @@ class LocationTypeType extends AbstractResourceType
             'label' => 'webburza.sylius.location_type.translations',
             'constraints' => [
                 new Valid()
+            ]
+        ]);
+
+        $builder->add('code', 'text', [
+            'label' => 'webburza.sylius.location_type.label.code',
+            'constraints' => [
+                new NotBlank()
             ]
         ]);
     }

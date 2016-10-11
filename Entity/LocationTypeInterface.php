@@ -15,6 +15,18 @@ interface LocationTypeInterface extends ResourceInterface, TranslatableInterface
     public function getId();
 
     /**
+     * Get code.
+     *
+     * @return string
+     */
+    public function getCode();
+
+    /**
+     * @param $code
+     */
+    public function setCode($code);
+
+    /**
      * Get name.
      *
      * @return string

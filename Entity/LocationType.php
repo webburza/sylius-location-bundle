@@ -33,6 +33,13 @@ class LocationType implements LocationTypeInterface
     protected $id;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="code", type="string", length=255, unique=true)
+     */
+    protected $code;
+
+    /**
      * @var \DateTime
      *
      * @ORM\Column(name="created_at", type="datetime")
@@ -64,6 +71,28 @@ class LocationType implements LocationTypeInterface
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * Get code.
+     *
+     * @return string
+     */
+    public function getCode()
+    {
+        return $this->code;
+    }
+
+    /**
+     * @param $code
+     *
+     * @return LocationType
+     */
+    public function setCode($code)
+    {
+        $this->code = $code;
+
+        return $this;
     }
 
     /**

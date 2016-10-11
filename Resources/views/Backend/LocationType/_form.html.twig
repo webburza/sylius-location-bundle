@@ -1,5 +1,8 @@
 <div class="ui segment">
     {{ form_errors(form) }}
+
+    {{ form_row(form.code) }}
+
     <div class="ui styled fluid accordion">
         {% for locale, translationForm in form.translations %}
             <div class="title{% if 0 == loop.index0 %} active{% endif %}">
