@@ -17,7 +17,6 @@ class InstallCommand extends ContainerAwareCommand
         ;
     }
 
-
     /**
      * {@inheritdoc}
      */
