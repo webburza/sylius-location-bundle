@@ -35,6 +35,9 @@ class LocationImage implements LocationImageInterface
      */
     protected $owner;
 
+    /**
+     * LocationImage constructor.
+     */
     public function __construct()
     {
         $this->createdAt = new \DateTime();

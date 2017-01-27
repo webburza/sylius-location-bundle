@@ -7,7 +7,7 @@ use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\FormBuilderInterface;
 
 /**
- * @author Grzegorz Sadowski <grzegorz.sadowski@lakion.com>
+ * @author Ivan Matas <ivan.matas@locastic.com>
  */
 class LocationImageType extends AbstractResourceType
 {

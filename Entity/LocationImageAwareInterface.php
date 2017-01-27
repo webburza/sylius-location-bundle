@@ -5,7 +5,7 @@ namespace Webburza\Sylius\LocationBundle\Entity;
 use Doctrine\Common\Collections\Collection;
 
 /**
- * @author Grzegorz Sadowski <grzegorz.sadowski@lakion.com>
+ * @author Ivan Matas <ivan.matas@locastic.com>
  */
 interface LocationImageAwareInterface
 {

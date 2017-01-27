@@ -41,4 +41,3 @@ final class AccountMenuListener
         ])->setLabel($this->translator->trans('webburza.sylius.location.frontend.locations'));
     }
 }
-

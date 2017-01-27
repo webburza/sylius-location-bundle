@@ -8,7 +8,7 @@ use Webburza\Sylius\LocationBundle\Uploader\ImageUploaderInterface;
 use Webmozart\Assert\Assert;
 
 /**
- * @author Grzegorz Sadowski <grzegorz.sadowski@lakion.com>
+ * @author Ivan Matas <ivan.matas@locastic.com>
  */
 class ImageUploadListener
 {
@@ -40,9 +40,9 @@ class ImageUploadListener
     /**
      * @param Location $subject
      */
-    private function uploadImages(Location $subject)
+    private function uploadImages(Location $location)
     {
-        $images = $subject->getImages();
+        $images = $location->getImages();
         if ($images->count()) {
             foreach ($images as $image) {
 //
@@ -50,7 +50,7 @@ class ImageUploadListener
                     $this->uploader->upload($image);
                 }
                 if ($image->getLocation() === null) {
-                    $image->setLocation($subject);
+                    $image->setLocation($location);
                 }
 
                 // Upload failed? Let's remove that image.
@@ -60,7 +60,7 @@ class ImageUploadListener
 
             }
         } else {
-            $subject->clearImages();
+            $location->clearImages();
         }
     }
 }

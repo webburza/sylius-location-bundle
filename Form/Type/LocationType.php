@@ -33,11 +33,11 @@ class LocationType extends AbstractResourceType
             'entry_type' => LocationImageType::class,
             'allow_add' => true,
         ]);
-//
+
         $builder->add('internalName', TextType::class, [
             'label' => 'webburza.sylius.location.label.internal_name',
         ]);
-//
+
         $builder->add('phone', TextType::class, [
             'label' => 'webburza.sylius.location.label.phone',
         ]);
@@ -45,7 +45,7 @@ class LocationType extends AbstractResourceType
         $builder->add('email', TextType::class, [
             'label' => 'webburza.sylius.location.label.email',
         ]);
-//
+
         $builder->add('latitude', TextType::class, [
             'label' => 'webburza.sylius.location.label.latitude',
         ]);

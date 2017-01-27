@@ -31,5 +31,5 @@ liip_imagine:
                 thumbnail: { size: [255, 255] }
 
 webburza_sylius_location:
-    google_maps_enabled: true
+    google_maps_enabled: false
     google_maps_key: 1234567890
