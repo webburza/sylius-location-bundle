@@ -2,8 +2,6 @@
 
 namespace Webburza\Sylius\LocationBundle\Command;
 
-use Sylius\Component\Rbac\Model\Permission;
-use Sylius\Component\Rbac\Model\PermissionInterface;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -19,6 +17,7 @@ class InstallCommand extends ContainerAwareCommand
         ;
     }
 
+
     /**
      * {@inheritdoc}
      */
@@ -29,10 +28,6 @@ class InstallCommand extends ContainerAwareCommand
 
         $output->writeln('<info>Creating location tables...</info>');
         $this->createLocationTables($manager);
-
-        $output->writeln('<info>Creating permissions...</info>');
-        $this->createPermissions($manager);
-
         $output->writeln('<info>Installation complete.</info>');
     }
 
@@ -71,100 +66,5 @@ class InstallCommand extends ContainerAwareCommand
         }
 
         $manager->commit();
-    }
-
-    /**
-     * Create all required permission entries.
-     *
-     * @param \Doctrine\ORM\EntityManager $manager
-     */
-    private function createPermissions($manager)
-    {
-        $repository = $this->getContainer()->get('sylius.repository.permission');
-
-        // Get parent node (used for catalog)
-        $catalogPermission = $repository->findOneBy(['code' => 'sylius.catalog']);
-
-        // Create permissions
-        $locationManagePermission = $this->createLocationPermissions($catalogPermission);
-        $locationTypeManagePermission = $this->createLocationTypePermissions($catalogPermission);
-
-        // Persist the permissions
-        $manager->persist($locationManagePermission);
-        $manager->persist($locationTypeManagePermission);
-        $manager->flush();
-    }
-
-    /**
-     * Create permissions for Location resource.
-     *
-     * @param PermissionInterface $parentPermission
-     *
-     * @return PermissionInterface
-     */
-    private function createLocationPermissions(PermissionInterface $parentPermission)
-    {
-        // Create main permissions node
-        $managePermission = new Permission();
-        $managePermission->setCode('webburza_location.manage.location');
-        $managePermission->setDescription('Manage locations');
-        $managePermission->setParent($parentPermission);
-
-        // Define permissions
-        $permissions = [
-            'webburza_location.location.show' => 'Show location',
-            'webburza_location.location.index' => 'List locations',
-            'webburza_location.location.create' => 'Create location',
-            'webburza_location.location.update' => 'Update location',
-            'webburza_location.location.delete' => 'Delete location',
-            'webburza_location.location_image.delete' => 'Delete location image',
-        ];
-
-        // Create each permission
-        foreach ($permissions as $code => $description) {
-            $permission = new Permission();
-            $permission->setCode($code);
-            $permission->setDescription($description);
-
-            $managePermission->addChild($permission);
-        }
-
-        return $managePermission;
-    }
-
-    /**
-     * Create permissions for Location Type resource.
-     *
-     * @param PermissionInterface $parentPermission
-     *
-     * @return PermissionInterface
-     */
-    private function createLocationTypePermissions(PermissionInterface $parentPermission)
-    {
-        // Create main permissions node
-        $managePermission = new Permission();
-        $managePermission->setCode('webburza_location.manage.location_type');
-        $managePermission->setDescription('Manage location types');
-        $managePermission->setParent($parentPermission);
-
-        // Define permissions
-        $permissions = [
-            'webburza_location.location_type.show' => 'Show location type',
-            'webburza_location.location_type.index' => 'List location types',
-            'webburza_location.location_type.create' => 'Create location type',
-            'webburza_location.location_type.update' => 'Update location type',
-            'webburza_location.location_type.delete' => 'Delete location type',
-        ];
-
-        // Create each permission
-        foreach ($permissions as $code => $description) {
-            $permission = new Permission();
-            $permission->setCode($code);
-            $permission->setDescription($description);
-
-            $managePermission->addChild($permission);
-        }
-
-        return $managePermission;
     }
 }

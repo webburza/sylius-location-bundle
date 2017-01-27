@@ -4,30 +4,25 @@ sylius_resource:
             classes:
                 repository: Webburza\Sylius\LocationBundle\Doctrine\ORM\LocationRepository
                 model: Webburza\Sylius\LocationBundle\Entity\Location
-                form:
-                    default: Webburza\Sylius\LocationBundle\Form\Type\LocationType
+                form: Webburza\Sylius\LocationBundle\Form\Type\LocationType
             translation:
                 classes:
                     model: Webburza\Sylius\LocationBundle\Entity\LocationTranslation
-                    form:
-                        default: Webburza\Sylius\LocationBundle\Form\Type\LocationTranslationType
+                    form: Webburza\Sylius\LocationBundle\Form\Type\LocationTranslationType
 
         webburza_location.location_type:
             classes:
                 model: Webburza\Sylius\LocationBundle\Entity\LocationType
-                form:
-                    default: Webburza\Sylius\LocationBundle\Form\Type\LocationTypeType
+                form: Webburza\Sylius\LocationBundle\Form\Type\LocationTypeType
             translation:
                 classes:
                     model: Webburza\Sylius\LocationBundle\Entity\LocationTypeTranslation
-                    form:
-                        default: Webburza\Sylius\LocationBundle\Form\Type\LocationTypeTranslationType
+                    form: Webburza\Sylius\LocationBundle\Form\Type\LocationTypeTranslationType
 
         webburza_location.location_image:
             classes:
                 model: Webburza\Sylius\LocationBundle\Entity\LocationImage
-                form:
-                    default: Webburza\Sylius\LocationBundle\Form\Type\LocationImageType
+                form: Webburza\Sylius\LocationBundle\Form\Type\LocationImageType
 
 liip_imagine:
     filter_sets:
@@ -35,9 +30,6 @@ liip_imagine:
             filters:
                 thumbnail: { size: [255, 255] }
 
-assetic:
-    bundles:        ['WebburzaSyliusLocationBundle']
-
 webburza_sylius_location:
-    google_maps_enabled: false
+    google_maps_enabled: true
     google_maps_key: 1234567890

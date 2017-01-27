@@ -104,7 +104,7 @@ class LocationTranslation extends AbstractTranslation implements ResourceInterfa
 
     /**
      * @var string
-     * 
+     *
      * @ORM\Column(name="description", type="text", nullable=true)
      * @JMS\Expose()
      */

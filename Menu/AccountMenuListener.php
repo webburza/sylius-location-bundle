@@ -1,12 +1,12 @@
 <?php
 
-namespace Webburza\Sylius\LocationBundle\EventListener;
+namespace Webburza\Sylius\LocationBundle\Menu;
 
-use Sylius\Bundle\WebBundle\Event\MenuBuilderEvent;
+use Sylius\Bundle\UiBundle\Menu\Event\MenuBuilderEvent;
 use Symfony\Component\Translation\Translator;
 use Symfony\Component\Translation\TranslatorInterface;
 
-class FrontendMenuBuilderListener
+final class AccountMenuListener
 {
     /**
      * @var Translator
@@ -26,12 +26,11 @@ class FrontendMenuBuilderListener
     /**
      * @param MenuBuilderEvent $event
      */
-    public function addFrontendMenuItems(MenuBuilderEvent $event)
+    public function addAccountMenuItems(MenuBuilderEvent $event)
     {
         $menu = $event->getMenu();
 
-        $menu->addChild('webburza_sylius_locations_front', [
-            'route' => 'webburza_location_frontend_index',
+        $menu->addChild('webburza_sylius_locations_front', ['route' => 'webburza_location_frontend_index',
             'linkAttributes' => [
                 'title' => $this->translator->trans('webburza.sylius.location.index_header'),
             ],
@@ -42,3 +41,4 @@ class FrontendMenuBuilderListener
         ])->setLabel($this->translator->trans('webburza.sylius.location.frontend.locations'));
     }
 }
+

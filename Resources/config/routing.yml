@@ -5,19 +5,37 @@
 webburza_location_type:
     resource: |
         alias: webburza_location.location_type
-        templates: WebburzaSyliusLocationBundle:Backend/LocationType
+        templates: SyliusAdminBundle:Crud
+        redirect: update
+        grid: webburza_location_type
+        vars:
+            all:
+                subheader: sylius.ui.locationType
+                templates:
+                    form:   WebburzaSyliusLocationBundle:LocationType:_form.html.twig
+            index:
+                icon: archive
     type: sylius.resource
-    prefix: /administration
+    prefix: /admin
 
 webburza_location:
     resource: |
         alias: webburza_location.location
-        templates: WebburzaSyliusLocationBundle:Backend/Location
+        templates: SyliusAdminBundle:Crud
+        redirect: update
+        grid: webburza_location
+        vars:
+            all:
+                subheader: sylius.ui.location
+                templates:
+                    form:   WebburzaSyliusLocationBundle:Location:_form.html.twig
+            index:
+                icon: archive
     type: sylius.resource
-    prefix: /administration
+    prefix: /admin
 
 webburza_location_location_image_delete:
-    path: /administration/location-image/{id}
+    path: /admin/location-image/{id}
     methods: [DELETE]
     defaults:
         _controller: webburza_location.controller.location_image:deleteAction

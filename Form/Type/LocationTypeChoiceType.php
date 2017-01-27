@@ -5,8 +5,9 @@ namespace Webburza\Sylius\LocationBundle\Form\Type;
 use Sylius\Component\Resource\Repository\RepositoryInterface;
 use Symfony\Bridge\Doctrine\Form\DataTransformer\CollectionToArrayTransformer;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\ChoiceList\ObjectChoiceList;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\Options;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class LocationTypeChoiceType extends AbstractType
@@ -15,7 +16,6 @@ class LocationTypeChoiceType extends AbstractType
      * @var RepositoryInterface
      */
     protected $repository;
-
     /**
      * @param RepositoryInterface $repository
      */
@@ -23,33 +23,28 @@ class LocationTypeChoiceType extends AbstractType
     {
         $this->repository = $repository;
     }
-
     /**
      * {@inheritdoc}
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        parent::buildForm($builder, $options);
-
-        if (true === $options['multiple']) {
+        if ($options['multiple']) {
             $builder->addViewTransformer(new CollectionToArrayTransformer(), true);
         }
     }
-
     /**
      * {@inheritdoc}
      */
     public function configureOptions(OptionsResolver $resolver)
     {
-        $choiceList = new ObjectChoiceList($this->repository->findAll(), 'name', [], null, 'id');
-
-        $resolver
-            ->setDefaults([
-                'choice_list' => $choiceList,
-                'label' => 'webburza.sylius.location.label.type',
-                'empty_value' => 'webburza.sylius.location.label.choose_type',
-            ])
-        ;
+        $resolver->setDefaults([
+            'choices' => function (Options $options) {
+                return $this->repository->findAll();
+            },
+            'empty_value' => 'webburza.sylius.location.label.choose_type',
+            'choice_value' => 'name',
+            'choice_label' => 'name',
+        ]);
     }
 
     /**
@@ -57,9 +52,8 @@ class LocationTypeChoiceType extends AbstractType
      */
     public function getParent()
     {
-        return 'choice';
+        return ChoiceType::class;
     }
-
     /**
      * {@inheritdoc}
      */

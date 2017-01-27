@@ -8,8 +8,8 @@ use Gedmo\Mapping\Annotation as Gedmo;
 use Sylius\Component\Resource\Model\ResourceInterface;
 use Sylius\Component\Resource\Model\TranslatableInterface;
 use Sylius\Component\Resource\Model\TranslatableTrait;
-use Sylius\Component\Translation\Model\AbstractTranslatable;
-use Sylius\Component\Translation\Model\TranslationInterface;
+use Sylius\Component\Resource\Model\AbstractTranslation;
+use Sylius\Component\Resource\Model\TranslationInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 use JMS\Serializer\Annotation as JMS;
 
@@ -53,7 +53,7 @@ class Location implements ResourceInterface, TranslatableInterface
 
     /**
      * @var LocationType
-     * @ORM\ManyToOne(targetEntity="LocationType")
+     * @ORM\ManyToOne(targetEntity="LocationType" , cascade={"persist"})
      * @ORM\JoinColumn(name="location_type")
      * @Assert\NotBlank()
      * @JMS\Expose()
@@ -395,7 +395,7 @@ class Location implements ResourceInterface, TranslatableInterface
      */
     public function getName()
     {
-        return $this->translate()->getName();
+        return $this->getTranslation()->getName();
     }
 
     /**
@@ -403,7 +403,7 @@ class Location implements ResourceInterface, TranslatableInterface
      */
     public function getSlug()
     {
-        return $this->translate()->getSlug();
+        return $this->getTranslation()->getSlug();
     }
 
     /**
@@ -411,7 +411,7 @@ class Location implements ResourceInterface, TranslatableInterface
      */
     public function getStreetName()
     {
-        return $this->translate()->getStreetName();
+        return $this->getTranslation()->getStreetName();
     }
 
     /**
@@ -419,7 +419,7 @@ class Location implements ResourceInterface, TranslatableInterface
      */
     public function getStreetNumber()
     {
-        return $this->translate()->getStreetNumber();
+        return $this->getTranslation()->getStreetNumber();
     }
 
     /**
@@ -427,7 +427,7 @@ class Location implements ResourceInterface, TranslatableInterface
      */
     public function getCity()
     {
-        return $this->translate()->getCity();
+        return $this->getTranslation()->getCity();
     }
 
     /**
@@ -435,7 +435,7 @@ class Location implements ResourceInterface, TranslatableInterface
      */
     public function getZip()
     {
-        return $this->translate()->getZip();
+        return $this->getTranslation()->getZip();
     }
 
     /**
@@ -443,7 +443,7 @@ class Location implements ResourceInterface, TranslatableInterface
      */
     public function getState()
     {
-        return $this->translate()->getState();
+        return $this->getTranslation()->getState();
     }
 
     /**
@@ -451,7 +451,7 @@ class Location implements ResourceInterface, TranslatableInterface
      */
     public function getCountry()
     {
-        return $this->translate()->getCountry();
+        return $this->getTranslation()->getCountry();
     }
 
     /**
@@ -459,7 +459,7 @@ class Location implements ResourceInterface, TranslatableInterface
      */
     public function getWorkingHours()
     {
-        return $this->translate()->getWorkingHours();
+        return $this->getTranslation()->getWorkingHours();
     }
 
     /**
@@ -467,7 +467,7 @@ class Location implements ResourceInterface, TranslatableInterface
      */
     public function getDescription()
     {
-        return $this->translate()->getDescription();
+        return $this->getTranslation()->getDescription();
     }
 
     /**
@@ -475,7 +475,7 @@ class Location implements ResourceInterface, TranslatableInterface
      */
     public function getMetaKeywords()
     {
-        return $this->translate()->getMetaKeywords();
+        return $this->getTranslation()->getMetaKeywords();
     }
 
     /**
@@ -483,7 +483,7 @@ class Location implements ResourceInterface, TranslatableInterface
      */
     public function getMetaDescription()
     {
-        return $this->translate()->getMetaDescription();
+        return $this->getTranslation()->getMetaDescription();
     }
 
     /**
@@ -546,5 +546,15 @@ class Location implements ResourceInterface, TranslatableInterface
     public function getCoords()
     {
         return $this->getLatitude() . ',' . $this->getLongitude();
+    }
+
+    /**
+     * Create resource translation model.
+     *
+     * @return \Sylius\Component\Resource\Model\TranslationInterface
+     */
+    protected function createTranslation()
+    {
+        return new LocationTranslation();
     }
 }

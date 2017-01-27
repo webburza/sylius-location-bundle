@@ -27,10 +27,6 @@ class UninstallCommand extends ContainerAwareCommand
 
         $output->writeln('<info>Removing location tables...</info>');
         $this->removeLocationTables($manager);
-
-        $output->writeln('<info>Removing permissions...</info>');
-        $this->removePermissions($manager);
-
         $output->writeln('<info>Uninstallation complete.</info>');
     }
 
@@ -71,24 +67,4 @@ class UninstallCommand extends ContainerAwareCommand
         $manager->commit();
     }
 
-    /**
-     * Remove permission entries.
-     *
-     * @param \Doctrine\ORM\EntityManager $manager
-     */
-    private function removePermissions($manager)
-    {
-        $repository = $this->getContainer()->get('sylius.repository.permission');
-
-        // Get the nodes to remove
-        $locationManagePermission = $repository->findOneBy(['code' => 'webburza_location.manage.location']);
-        $locationTypeManagePermission = $repository->findOneBy(['code' => 'webburza_location.manage.location_type']);
-
-        if ($locationManagePermission && $locationTypeManagePermission) {
-            // Remove permissions
-            $manager->remove($locationManagePermission);
-            $manager->remove($locationTypeManagePermission);
-            $manager->flush();
-        }
-    }
 }

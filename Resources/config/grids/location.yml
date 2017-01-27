@@ -1,0 +1,50 @@
+sylius_grid:
+    grids:
+        webburza_location:
+            driver:
+                name: doctrine/orm
+                options:
+                    class: Webburza\Sylius\LocationBundle\Entity\Location
+            sorting:
+                internalName: asc
+            fields:
+                internalName:
+                    type: string
+                    label: sylius.ui.internalName
+                    sortable: ~
+                locationType:
+                    type: string
+                    label: sylius.ui.locationType
+                    sortable: ~
+                email:
+                    type: string
+                    label: sylius.ui.email
+                    sortable: ~
+                latitude:
+                    type: string
+                    label: sylius.ui.latitude
+                longitude:
+                    type: string
+                    label: sylius.ui.longitude
+                phone:
+                    type: string
+                    label: sylius.ui.phone
+                    sortable: email
+                published:
+                    type: twig
+                    label: sylius.ui.published
+                    options:
+                        template: "SyliusUiBundle:Grid/Field:yesNo.html.twig"
+            filters:
+                internalName:
+                    type: string
+                    label: sylius.ui.internalName
+            actions:
+                main:
+                    create:
+                        type: create
+                item:
+                    update:
+                        type: update
+                    delete:
+                        type: delete
