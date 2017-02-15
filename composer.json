@@ -26,5 +26,5 @@
     "require": {
         "sylius/sylius": "dev-master"
     }
-    "minimum-stability": "dev"
+    
 }
