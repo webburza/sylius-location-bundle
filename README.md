@@ -35,6 +35,7 @@ images and Google Maps support on both pages.
   ```yaml
   imports:
       - { resource: @WebburzaSyliusLocationBundle/Resources/config/config.yml }
+      - { resource: "@WebburzaSyliusLocationBundle/Resources/config/grids/grids.yml" }
   ```
 
   Among other things, this provides configuration entries which can then be overriden
