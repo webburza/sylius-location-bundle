@@ -38,6 +38,6 @@ final class AccountMenuListener
                 'icon' => 'icon-building icon-large',
                 'iconOnly' => false,
             ],
-        ])->setLabel($this->translator->trans('webburza.sylius.location.frontend.locations'));
+        ])->setLabel($this->translator->trans('webburza.sylius.location.frontend.locations'))->setLabelAttribute('icon', 'flag');
     }
 }
