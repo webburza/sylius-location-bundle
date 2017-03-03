@@ -77,6 +77,7 @@ class LocationTranslation extends AbstractTranslation implements ResourceInterfa
      * @var string
      *
      * @ORM\Column(name="zip", type="string", length=20)
+     * @Assert\NotBlank()
      * @JMS\Expose()
      */
     protected $zip;
@@ -94,6 +95,7 @@ class LocationTranslation extends AbstractTranslation implements ResourceInterfa
      * @var string
      *
      * @ORM\Column(name="country", type="string", length=255)
+     * @Assert\NotBlank()
      * @JMS\Expose()
      */
     protected $country;
