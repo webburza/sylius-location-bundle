@@ -50,6 +50,7 @@ class LocationTranslation extends AbstractTranslation implements ResourceInterfa
      * @var string
      *
      * @ORM\Column(name="street_name", type="string", length=255)
+     * @Assert\NotBlank()
      * @JMS\Expose()
      */
     protected $streetName;
@@ -58,6 +59,7 @@ class LocationTranslation extends AbstractTranslation implements ResourceInterfa
      * @var string
      *
      * @ORM\Column(name="street_number", type="string", length=255)
+     * @Assert\NotBlank()
      * @JMS\Expose()
      */
     protected $streetNumber;
@@ -66,6 +68,7 @@ class LocationTranslation extends AbstractTranslation implements ResourceInterfa
      * @var string
      *
      * @ORM\Column(name="city", type="string", length=255)
+     * @Assert\NotBlank()
      * @JMS\Expose()
      */
     protected $city;
@@ -82,6 +85,7 @@ class LocationTranslation extends AbstractTranslation implements ResourceInterfa
      * @var string
      *
      * @ORM\Column(name="state", type="string", length=255)
+     * @Assert\NotBlank()
      * @JMS\Expose()
      */
     protected $state;
@@ -98,6 +102,7 @@ class LocationTranslation extends AbstractTranslation implements ResourceInterfa
      * @var string
      *
      * @ORM\Column(name="working_hours", type="text")
+     * @Assert\NotBlank()
      * @JMS\Expose()
      */
     protected $workingHours;
