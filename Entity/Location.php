@@ -64,6 +64,7 @@ class Location implements ResourceInterface, TranslatableInterface
      * @var string
      *
      * @ORM\Column(name="phone", type="string", length=255)
+     * @Assert\NotBlank()
      * @JMS\Expose()
      */
     protected $phone;
@@ -81,6 +82,7 @@ class Location implements ResourceInterface, TranslatableInterface
      * @var string
      *
      * @ORM\Column(name="latitude", type="decimal", precision=10, scale=8)
+     * @Assert\NotBlank()
      * @JMS\Expose()
      */
     protected $latitude;
@@ -89,6 +91,7 @@ class Location implements ResourceInterface, TranslatableInterface
      * @var string
      *
      * @ORM\Column(name="longitude", type="decimal", precision=10, scale=8)
+     * @Assert\NotBlank()
      * @JMS\Expose()
      */
     protected $longitude;
@@ -96,6 +99,7 @@ class Location implements ResourceInterface, TranslatableInterface
     /**
      * @var LocationImage[]
      * @ORM\OneToMany(targetEntity="LocationImage", mappedBy="location", cascade={"persist", "remove"})
+     * @Assert\NotBlank()
      * @JMS\Expose()
      */
     protected $images;
