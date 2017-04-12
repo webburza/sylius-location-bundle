@@ -1,20 +1,19 @@
 services:
-    webburza_location.listener.menu_builder:
-        class: Webburza\Sylius\LocationBundle\EventListener\MenuBuilderListener
-        arguments: [@translator]
+    webburza_location.listener.admin.menu_builder:
+        class: Webburza\Sylius\LocationBundle\Menu\AdminMenuListener
+        arguments: ["@translator"]
         tags:
-            - { name: kernel.event_listener, event: sylius.menu_builder.backend.main, method: addBackendMenuItems }
-            - { name: kernel.event_listener, event: sylius.menu_builder.backend.sidebar, method: addBackendMenuItems }
+            - { name: kernel.event_listener, event: sylius.menu.admin.main, method: addAdminMenuItems }
 
-    webburza_location.listener.front_menu_builder:
-        class: Webburza\Sylius\LocationBundle\EventListener\FrontendMenuBuilderListener
-        arguments: [@translator]
+    webburza_location.listener.shop.menu_builder:
+        class: Webburza\Sylius\LocationBundle\Menu\AccountMenuListener
+        arguments: ["@translator"]
         tags:
-            - { name: kernel.event_listener, event: sylius.menu_builder.frontend.main, method: addFrontendMenuItems }
+            - { name: kernel.event_listener, event: sylius.menu.shop.account, method: addAccountMenuItems }
 
     webburza_location.listener.image_upload:
         class: Webburza\Sylius\LocationBundle\EventListener\ImageUploadListener
-        arguments: [@sylius.image_uploader]
+        arguments: ["@webburza_location.location.image_uploader"]
         tags:
             - { name: kernel.event_listener, event: webburza_location.location.pre_create, method: uploadLocationImage }
             - { name: kernel.event_listener, event: webburza_location.location.pre_update, method: uploadLocationImage }
@@ -29,4 +28,38 @@ services:
         class: Webburza\Sylius\LocationBundle\Form\Type\LocationTypeChoiceType
         tags:
             - { name: form.type, alias: webburza_location_location_type_choice }
-        arguments: [@webburza_location.repository.location_type]
+        arguments: ["@webburza_location.repository.location_type"]
+
+    webburza_location.form.type.location:
+        class: Webburza\Sylius\LocationBundle\Form\Type\LocationType
+        tags:
+            - { name: form.type, alias: webburza_location_location }
+        arguments: [Webburza\Sylius\LocationBundle\Entity\Location]
+
+    webburza_location.form.type.location_translation:
+        class: Webburza\Sylius\LocationBundle\Form\Type\LocationTranslationType
+        tags:
+            - { name: form.type, alias: webburza_location_location_translation }
+        arguments: [Webburza\Sylius\LocationBundle\Entity\LocationTranslation]
+
+    webburza_location.form.type.location_type:
+        class: Webburza\Sylius\LocationBundle\Form\Type\LocationTypeType
+        tags:
+            - { name: form.type, alias: webburza_location_location_type }
+        arguments: [Webburza\Sylius\LocationBundle\Entity\LocationType]
+
+    webburza_location.form.type.location_type_translation:
+        class: Webburza\Sylius\LocationBundle\Form\Type\LocationTypeTranslationType
+        tags:
+            - { name: form.type, alias: webburza_location_location_type_translation }
+        arguments: [Webburza\Sylius\LocationBundle\Entity\LocationTypeTranslation]
+
+    gaufrette.filesystem_map.get:
+        class: Gaufrette\Filesystem
+        public: false
+        arguments: ['%sylius.uploader.filesystem%']
+        factory: ['@knp_gaufrette.filesystem_map', get]
+
+    webburza_location.location.image_uploader:
+        class: Webburza\Sylius\LocationBundle\Uploader\ImageUploader
+        arguments: [ "@gaufrette.filesystem_map.get" ]

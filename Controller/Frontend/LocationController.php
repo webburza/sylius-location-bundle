@@ -46,7 +46,7 @@ class LocationController extends Controller
         $locationRepository = $this->container->get('webburza_location.repository.location');
 
         // Get current locale
-        $locale = $this->get('sylius.context.locale')->getCurrentLocale();
+       $locale = $this->get('sylius.context.locale')->getLocaleCode();
 
         /* @var \Symfony\Component\Serializer\Serializer */
         $serializer = $this->container->get('serializer');
@@ -88,7 +88,7 @@ class LocationController extends Controller
         $locationRepository = $this->container->get('webburza_location.repository.location');
 
         /* @var \Sylius\Component\Locale\Model\Locale */
-        $locale = $this->get('sylius.context.locale')->getCurrentLocale();
+        $locale = $this->get('sylius.context.locale')->getLocaleCode();
 
         /* @var \Symfony\Component\Serializer\Serializer */
         $serializer = $this->container->get('serializer');

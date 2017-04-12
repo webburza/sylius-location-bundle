@@ -1,26 +1,26 @@
-{% extends 'SyliusWebBundle:Frontend:layout.html.twig' %}
+{% extends '@SyliusShop/layout.html.twig' %}
 
 {% block title %}{{ location.name }} - {{ location.address }}{% endblock %}
 
-{% block head %}
+{% block metatags %}
     <meta charset="UTF-8">
     <title>{{ block('title') }}</title>
     <meta name="description" content="{{ location.metaDescription }}">
     <meta name="keywords" content="{{ location.metaKeywords }}">
+    <meta property="place:location:latitude" content="{{ location.latitude }}"/>
+    <meta property="place:location:longitude" content="{{ location.longitude }}"/>
 {% endblock %}
 
-{% block type %}{{ location.locationType.name }}{% endblock %}
-{% block extraOG %}
-<meta property="place:location:latitude" content="{{ location.latitude }}" />
-<meta property="place:location:longitude" content="{{ location.longitude }}" />
+{% block stylesheets %}
+    {{ parent() }}
+    {% include '@SyliusUi/_stylesheets.html.twig' with {'path': 'bundles/webburzasyliuslocation/css/locations.css'} %}
 {% endblock %}
 
-{% block main %}
-<hr>
-{% block slideshow_full %}{% endblock %}
-<div class="row">
-    <div class="col-md-12">
-        {% block content %}
+
+{% block content %}
+    <hr>
+    <div class="row">
+        <div class="col-md-12">
 
             <div class="Location">
 
@@ -46,11 +46,15 @@
                                                 </div>
                                                 <div class="panel-body">
                                                     {% if location.phone %}
-                                                        <p>{{ 'webburza.sylius.location.label.phone' | trans }}: <a href="tel:{{ location.phone|replace({'-' : '', ' ' : '', '/' : ''}) }}">{{ location.phone }}</a>
-                                                    {% endif %}
+                                                    <p>{{ 'webburza.sylius.location.label.phone' | trans }}: <a
+                                                                href="tel:{{ location.phone|replace({'-' : '', ' ' : '', '/' : ''}) }}">{{ location.phone }}</a>
+                                                        {% endif %}
                                                     </p>
                                                     {% if location.email %}
-                                                        <p>{{ 'webburza.sylius.location.label.email' | trans }}: <a href="mailto:{{ location.email }}">{{ location.email }}</a></p>
+                                                        <p>{{ 'webburza.sylius.location.label.email' | trans }}:
+                                                            <a
+                                                                    href="mailto:{{ location.email }}">{{ location.email }}</a>
+                                                        </p>
                                                     {% endif %}
                                                 </div>
                                             </div>
@@ -74,26 +78,31 @@
                         </div>
                     </div>
                 </div>
-
                 {% if location.images.snapshot | length %}
-                <div class="row">
-                    <div class="col-md-12">
-                        <h2>{{ 'webburza.sylius.location.label.images' | trans }}</h2>
-                    </div>
-
-                    {% for image in location.images.snapshot %}
-                        <div class="col-md-3 col-sm-3 col-xs-4">
-                            <a href="{{ image.path | imagine_filter('sylius_large') }}" target="_blank"><img class="Location-image img-thumbnail thumbnail" src="{{ image.path | imagine_filter('sylius_255x255') }}"></a>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h2>{{ 'webburza.sylius.location.label.images' | trans }}</h2>
                         </div>
-                    {% endfor %}
-                </div>
+
+                        {% for image in location.images.snapshot %}
+                            <div class="col-md-3 col-sm-3 col-xs-4">
+                                <a href="{{ image.path | imagine_filter('sylius_255x255') }}" target="_blank"><img
+                                            class="Location-image img-thumbnail thumbnail"
+                                            src="{{ image.path | imagine_filter('sylius_255x255') }}"></a>
+                            </div>
+                        {% endfor %}
+                    </div>
                 {% endif %}
 
 
                 <div class="row">
 
                     <div class="col-md-12">
-                        <p><a class="btn btn-success btn-sm" href="{{ path('webburza_location_frontend_index') }}"><i class="glyphicon glyphicon-chevron-left" role="presentation" aria-hidden="true"></i> {{ 'webburza.sylius.location.back_to_all' | trans }}</a></p>
+                        <p><a class="btn btn-success btn-sm"
+                              href="{{ path('webburza_location_frontend_index') }}"><i
+                                        class="glyphicon glyphicon-chevron-left" role="presentation"
+                                        aria-hidden="true"></i> {{ 'webburza.sylius.location.back_to_all' | trans }}
+                            </a></p>
                     </div>
                 </div>
 
@@ -111,7 +120,10 @@
                     <div class="row">
                         <div class="col-md-12 text-center">
                             <br>
-                            <a class="btn btn-sm btn-success" href="{{ googleMapUrl }}" target="_blank"><i class="glyphicon glyphicon-new-window" role="presentation" aria-hidden="true"></i> {{ 'webburza.sylius.location.frontend.open_in_gm' | trans }}</a>
+                            <a class="btn btn-sm btn-success" href="{{ googleMapUrl }}" target="_blank"><i
+                                        class="glyphicon glyphicon-new-window" role="presentation"
+                                        aria-hidden="true"></i> {{ 'webburza.sylius.location.frontend.open_in_gm' | trans }}
+                            </a>
                         </div>
                     </div>
                 {% endif %}
@@ -120,25 +132,10 @@
                     var loc = {{ locationJson | raw }};
                 </script>
             </div>
-            {% endblock %}
-                </div>
-            </div>
-            <div class="row">
-                {% for i in 1..3 %}
-                    <div class="col-md-4">
-                        {{ sonata_block_render({'name': '/cms/blocks/block-' ~ i}) }}
-                    </div>
-                {% endfor %}
-            </div>
-            <hr>
-        {% endblock %}
-
-{% block stylesheets %}
-    {{ parent() }}
-
-    {% stylesheets 'bundles/webburzasyliuslocation/css/*' filter='cssrewrite' %}
-        <link rel="stylesheet" href="{{ asset_url }}" type="text/css" />
-    {% endstylesheets %}
+            {#{% endblock %}#}
+        </div>
+    </div>
+    <hr>
 {% endblock %}
 
 {% block javascripts %}
@@ -147,8 +144,6 @@
     {% if googleMapsEnabled %}
         <script src="//maps.googleapis.com/maps/api/js?key={{ googleMapsKey }}"></script>
     {% endif %}
-
-    {% javascripts '@WebburzaSyliusLocationBundle/Resources/public/js/location.js' %}
-        <script type="text/javascript" src="{{ asset_url }}"></script>
-    {% endjavascripts %}
+    {% include '@SyliusUi/_javascripts.html.twig' with {'path': 'bundles/webburzasyliuslocation/js/location.js'} %}
+    {% include '@SyliusUi/_javascripts.html.twig' with {'path': 'bundles/webburzasyliuslocation/js/locations.js'} %}
 {% endblock %}

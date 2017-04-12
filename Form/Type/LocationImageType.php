@@ -2,37 +2,32 @@
 
 namespace Webburza\Sylius\LocationBundle\Form\Type;
 
-use Sylius\Bundle\CoreBundle\Form\Type\ImageType;
+use Sylius\Bundle\ResourceBundle\Form\Type\AbstractResourceType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class LocationImageType extends ImageType
+/**
+ * @author Ivan Matas <ivan.matas@locastic.com>
+ */
+class LocationImageType extends AbstractResourceType
 {
     /**
      * {@inheritdoc}
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('file', 'file', [
-            'label' => 'webburza.sylius.location.label.image',
-            'property_path' => 'file',
-        ]);
+        $builder
+            ->add('file', FileType::class, [
+                'label' => 'webburza.sylius.location.label.image',
+                'property_path' => 'file',
+            ])
+        ;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function configureOptions(OptionsResolver $resolver)
-    {
-        $resolver->setDefaults(array(
-            'data_class' => 'Webburza\Sylius\LocationBundle\Entity\LocationImage',
-        ));
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getName()
+    public function getBlockPrefix()
     {
         return 'webburza_location_location_image';
     }

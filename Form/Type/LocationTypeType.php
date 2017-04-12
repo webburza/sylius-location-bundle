@@ -3,6 +3,7 @@
 namespace Webburza\Sylius\LocationBundle\Form\Type;
 
 use Sylius\Bundle\ResourceBundle\Form\Type\AbstractResourceType;
+use Sylius\Bundle\ResourceBundle\Form\Type\ResourceTranslationsType;
 use Symfony\Component\Form\Extension\Core\Type;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints\Valid;
@@ -17,8 +18,8 @@ class LocationTypeType extends AbstractResourceType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('translations', 'sylius_translations', [
-            'type' => 'webburza_location_location_type_translation',
+        $builder->add('translations', ResourceTranslationsType::class , [
+            'entry_type' => LocationTypeTranslationType::class,
             'label' => 'webburza.sylius.location_type.translations',
             'constraints' => [
                 new Valid()

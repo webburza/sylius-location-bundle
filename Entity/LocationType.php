@@ -8,6 +8,7 @@ use Sylius\Component\Resource\Model\ResourceInterface;
 use JMS\Serializer\Annotation as JMS;
 use Sylius\Component\Resource\Model\TranslatableInterface;
 use Sylius\Component\Resource\Model\TranslatableTrait;
+use Sylius\Component\Resource\Model\TranslationInterface;
 
 /**
  * LocationType.
@@ -73,7 +74,7 @@ class LocationType implements ResourceInterface, TranslatableInterface
      */
     public function getName()
     {
-        return $this->translate()->getName();
+        return $this->getTranslation()->getName();
     }
 
     /**
@@ -83,7 +84,7 @@ class LocationType implements ResourceInterface, TranslatableInterface
      */
     public function getSlug()
     {
-        return $this->translate()->getSlug();
+        return $this->getTranslation()->getSlug();
     }
 
     /**
@@ -132,5 +133,23 @@ class LocationType implements ResourceInterface, TranslatableInterface
     public function getUpdatedAt()
     {
         return $this->updatedAt;
+    }
+
+    /**
+     * Create resource translation model.
+     *
+     * @return TranslationInterface
+     */
+    protected function createTranslation()
+    {
+        return new LocationTypeTranslation();
+    }
+    /**
+     * @return string
+     */
+    public function __toString()
+    {
+        return  $this->getName();
+
     }
 }

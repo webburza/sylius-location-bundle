@@ -35,6 +35,7 @@ images and Google Maps support on both pages.
   ```yaml
   imports:
       - { resource: @WebburzaSyliusLocationBundle/Resources/config/config.yml }
+      - { resource: "@WebburzaSyliusLocationBundle/Resources/config/grids/grids.yml" }
   ```
 
   Among other things, this provides configuration entries which can then be overriden
@@ -61,16 +62,15 @@ images and Google Maps support on both pages.
   routes and frontend routes.
 
   5. The bundle should now be fully integrated, but it still requires
-database tables to be created and RBAC permissions set. To ease this
+database tables to be created. To ease this
 process, after you've integrated the bundle you can run the
 following command:
 
   ```bash
-  $ app/console webburza:sylius-location-bundle:install
+  $ bin/console webburza:sylius-location-bundle:install
   ```
 
-  This will create all the required database tables, prefixed with `webburza_`,
-and all the RBAC permissions, under the existing 'content' node.
+  This will create all the required database tables, prefixed with `webburza_` under the existing 'content' node.
 
   6. By default, there will be no location types defined. You should create and translate
 the location types that you need and create locations that use those types.
