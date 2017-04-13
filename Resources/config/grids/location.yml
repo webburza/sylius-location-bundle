@@ -4,41 +4,51 @@ sylius_grid:
             driver:
                 name: doctrine/orm
                 options:
-                    class: Webburza\Sylius\LocationBundle\Entity\Location
+                    class: '%webburza_location.model.location.class%'
             sorting:
                 internalName: asc
             fields:
                 internalName:
                     type: string
-                    label: sylius.ui.internalName
+                    label: webburza_location.form.location.internal_name
                     sortable: ~
                 locationType:
                     type: string
-                    label: sylius.ui.locationType
+                    label: webburza_location.form.location.location_type
                     sortable: ~
+                    path: locationType.name
                 email:
                     type: string
-                    label: sylius.ui.email
+                    label: webburza_location.form.location.email
                     sortable: ~
                 latitude:
                     type: string
-                    label: sylius.ui.latitude
+                    label: webburza_location.form.location.latitude
+                    sortable: ~
                 longitude:
                     type: string
-                    label: sylius.ui.longitude
+                    label: webburza_location.form.location.longitude
+                    sortable: ~
                 phone:
                     type: string
-                    label: sylius.ui.phone
-                    sortable: email
+                    label: webburza_location.form.location.phone
+                    sortable: ~
                 published:
                     type: twig
-                    label: sylius.ui.published
+                    label: webburza_location.form.location.published
+                    sortable: ~
                     options:
                         template: "SyliusUiBundle:Grid/Field:yesNo.html.twig"
+                createdAt:
+                    type: datetime
+                    label: sylius.ui.created_at
+                    sortable: ~
+                    options:
+                        format: Y-m-d H:i:s
             filters:
                 internalName:
                     type: string
-                    label: sylius.ui.internalName
+                    label: webburza_location.form.location.internal_name
             actions:
                 main:
                     create:

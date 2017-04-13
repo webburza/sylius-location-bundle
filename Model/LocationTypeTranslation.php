@@ -1,29 +1,19 @@
 <?php
 
-namespace Webburza\Sylius\LocationBundle\Entity;
+namespace Webburza\Sylius\LocationBundle\Model;
 
-use Doctrine\ORM\Mapping as ORM;
 use Sylius\Component\Resource\Model\AbstractTranslation;
 use Sylius\Component\Resource\Model\ResourceInterface;
-use Symfony\Component\Validator\Constraints as Assert;
-use Gedmo\Mapping\Annotation as Gedmo;
 use JMS\Serializer\Annotation as JMS;
 
 /**
- * Location.
- *
- * @ORM\Table(name="webburza_sylius_location_type_translation")
- * @ORM\Entity()
  * @JMS\ExclusionPolicy("all")
  */
-class LocationTypeTranslation extends AbstractTranslation implements ResourceInterface
+class LocationTypeTranslation extends AbstractTranslation implements LocationTypeTranslationInterface
 {
     /**
      * @var int
      *
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
      * @JMS\Expose()
      */
     protected $id;
@@ -31,8 +21,6 @@ class LocationTypeTranslation extends AbstractTranslation implements ResourceInt
     /**
      * @var string
      *
-     * @ORM\Column(name="name", type="string", length=255, nullable=true)
-     * @Assert\NotBlank()
      * @JMS\Expose()
      */
     protected $name;
@@ -40,8 +28,6 @@ class LocationTypeTranslation extends AbstractTranslation implements ResourceInt
     /**
      * @var string
      *
-     * @ORM\Column(name="slug", type="string", length=255, nullable=true)
-     * @Gedmo\Slug(fields={"name"}, unique_base="locale")
      * @JMS\Expose()
      */
     protected $slug;
@@ -65,7 +51,7 @@ class LocationTypeTranslation extends AbstractTranslation implements ResourceInt
     /**
      * @param string $name
      *
-     * @return LocationTypeTranslation
+     * @return $this
      */
     public function setName($name)
     {
@@ -85,7 +71,7 @@ class LocationTypeTranslation extends AbstractTranslation implements ResourceInt
     /**
      * @param string $slug
      *
-     * @return LocationTypeTranslation
+     * @return $this
      */
     public function setSlug($slug)
     {

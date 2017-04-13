@@ -12,19 +12,19 @@
     ],
     "authors": [
         {
-            "name": "Tin Benjamin Matuka",
-            "email": "tin@burza.hr"
-        },
-        {
             "name": "Yousef Chanan",
             "email": "yousef@burza.hr"
+        },
+        {
+            "name": "Tin Benjamin Matuka",
+            "email": "tin@burza.hr"
         }
     ],
     "autoload": {
         "psr-4": { "Webburza\\Sylius\\LocationBundle\\": "" }
     },
     "require": {
-        "sylius/sylius": "dev-master"
+        "sylius/core": "dev-master"
     }
     
 }

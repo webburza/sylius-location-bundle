@@ -1,26 +1,17 @@
 <?php
 
-namespace Webburza\Sylius\LocationBundle\Entity;
+namespace Webburza\Sylius\LocationBundle\Model;
 
 use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\ORM\Mapping as ORM;
-use Gedmo\Mapping\Annotation as Gedmo;
-use Sylius\Component\Resource\Model\ResourceInterface;
-use Sylius\Component\Resource\Model\TranslatableInterface;
+use Sylius\Component\Core\Model\ImageInterface;
 use Sylius\Component\Resource\Model\TranslatableTrait;
-use Sylius\Component\Resource\Model\AbstractTranslation;
-use Sylius\Component\Resource\Model\TranslationInterface;
-use Symfony\Component\Validator\Constraints as Assert;
 use JMS\Serializer\Annotation as JMS;
 
 /**
  * Location.
- *
- * @ORM\Table(name="webburza_sylius_location")
- * @ORM\Entity()
  * @JMS\ExclusionPolicy("all")
  */
-class Location implements ResourceInterface, TranslatableInterface
+class Location implements LocationInterface
 {
     use TranslatableTrait {
         __construct as private initializeTranslationsCollection;
@@ -28,95 +19,63 @@ class Location implements ResourceInterface, TranslatableInterface
 
     /**
      * @var int
-     *
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
      * @JMS\Expose()
      */
     protected $id;
 
     /**
      * @var bool
-     *
-     * @ORM\Column(name="published", type="boolean")
      */
-    protected $published;
+    protected $published = false;
 
     /**
      * @var string
-     *
-     * @ORM\Column(name="internal_name", type="string", length=255)
-     * @Assert\NotBlank()
      */
     protected $internalName;
 
     /**
      * @var LocationType
-     * @ORM\ManyToOne(targetEntity="LocationType" , cascade={"persist"})
-     * @ORM\JoinColumn(name="location_type")
-     * @Assert\NotBlank()
      * @JMS\Expose()
      */
     protected $locationType;
 
     /**
      * @var string
-     *
-     * @ORM\Column(name="phone", type="string", length=255)
-     * @Assert\NotBlank()
      * @JMS\Expose()
      */
     protected $phone;
 
     /**
      * @var string
-     *
-     * @ORM\Column(name="email", type="string", length=255, nullable=true)
-     * @Assert\Email()
      * @JMS\Expose()
      */
     protected $email;
 
     /**
      * @var string
-     *
-     * @ORM\Column(name="latitude", type="decimal", precision=10, scale=8)
-     * @Assert\NotBlank()
      * @JMS\Expose()
      */
     protected $latitude;
 
     /**
      * @var string
-     *
-     * @ORM\Column(name="longitude", type="decimal", precision=10, scale=8)
-     * @Assert\NotBlank()
      * @JMS\Expose()
      */
     protected $longitude;
 
     /**
-     * @var LocationImage[]
-     * @ORM\OneToMany(targetEntity="LocationImage", mappedBy="location", cascade={"persist", "remove"})
-     * @Assert\NotBlank()
+     * @var LocationImageInterface[]
      * @JMS\Expose()
      */
     protected $images;
 
     /**
      * @var \DateTime
-     *
-     * @ORM\Column(name="created_at", type="datetime")
-     * @Gedmo\Timestampable(on="create")
      */
     protected $createdAt;
 
     /**
      * @var \DateTime
-     *
-     * @ORM\Column(name="updated_at", type="datetime", nullable=true)
-     * @Gedmo\Timestampable(on="update")
      */
     protected $updatedAt;
 
@@ -150,7 +109,7 @@ class Location implements ResourceInterface, TranslatableInterface
     /**
      * @param bool $published
      *
-     * @return Location
+     * @return $this
      */
     public function setPublished($published)
     {
@@ -164,7 +123,7 @@ class Location implements ResourceInterface, TranslatableInterface
      *
      * @param string $internalName
      *
-     * @return Location
+     * @return $this
      */
     public function setInternalName($internalName)
     {
@@ -184,7 +143,7 @@ class Location implements ResourceInterface, TranslatableInterface
     }
 
     /**
-     * @return LocationType
+     * @return LocationTypeInterface
      */
     public function getLocationType()
     {
@@ -192,11 +151,11 @@ class Location implements ResourceInterface, TranslatableInterface
     }
 
     /**
-     * @param LocationType
+     * @param LocationTypeInterface
      *
-     * @return Location
+     * @return $this
      */
-    public function setLocationType(LocationType $locationType)
+    public function setLocationType(LocationTypeInterface $locationType)
     {
         $this->locationType = $locationType;
 
@@ -208,7 +167,7 @@ class Location implements ResourceInterface, TranslatableInterface
      *
      * @param string $phone
      *
-     * @return Location
+     * @return $this
      */
     public function setPhone($phone)
     {
@@ -248,7 +207,7 @@ class Location implements ResourceInterface, TranslatableInterface
      *
      * @param string $latitude
      *
-     * @return Location
+     * @return $this
      */
     public function setLatitude($latitude)
     {
@@ -272,7 +231,7 @@ class Location implements ResourceInterface, TranslatableInterface
      *
      * @param string $longitude
      *
-     * @return Location
+     * @return $this
      */
     public function setLongitude($longitude)
     {
@@ -292,66 +251,11 @@ class Location implements ResourceInterface, TranslatableInterface
     }
 
     /**
-     * @param array|ArrayCollection|LocationImage[] $images
-     *
-     * @return Location
-     */
-    public function setImages($images)
-    {
-        $this->clearImages();
-        if (0 < count($images)) {
-            foreach ($images as $image) {
-                $this->addImage($image);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @param LocationImage $image
-     *
-     * @return bool
-     */
-    public function addImage(LocationImage $image)
-    {
-        $image->setLocation($this);
-
-        return $this->images->add($image);
-    }
-
-    /**
-     * Clears images.
-     */
-    public function clearImages()
-    {
-        $this->images->clear();
-    }
-
-    /**
-     * @param LocationImage $image
-     *
-     * @return bool
-     */
-    public function removeImages(LocationImage $image)
-    {
-        return $this->images->removeElement($image);
-    }
-
-    /**
-     * @return ArrayCollection|LocationImage[]
-     */
-    public function getImages()
-    {
-        return $this->images;
-    }
-
-    /**
      * Set createdAt.
      *
      * @param \DateTime $createdAt
      *
-     * @return Location
+     * @return $this
      */
     public function setCreatedAt($createdAt)
     {
@@ -375,7 +279,7 @@ class Location implements ResourceInterface, TranslatableInterface
      *
      * @param \DateTime $updatedAt
      *
-     * @return Location
+     * @return $this
      */
     public function setUpdatedAt($updatedAt)
     {
@@ -553,12 +457,69 @@ class Location implements ResourceInterface, TranslatableInterface
     }
 
     /**
-     * Create resource translation model.
-     *
-     * @return \Sylius\Component\Resource\Model\TranslationInterface
+     * {@inheritdoc}
      */
     protected function createTranslation()
     {
         return new LocationTranslation();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getImages()
+    {
+        return $this->images;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getImageByCode($code)
+    {
+        foreach ($this->images as $image) {
+            if ($code === $image->getCode()) {
+                return $image;
+            }
+        }
+
+        return null;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function hasImages()
+    {
+        return !$this->images->isEmpty();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function hasImage(ImageInterface $image)
+    {
+        return $this->images->contains($image);
+    }
+
+    /**
+     * @param ImageInterface|LocationImageInterface $image
+     */
+    public function addImage(ImageInterface $image)
+    {
+        $image->setLocation($this);
+
+        $this->images->add($image);
+    }
+
+    /**
+     * @param ImageInterface|LocationImageInterface $image
+     */
+    public function removeImage(ImageInterface $image)
+    {
+        if ($this->hasImage($image)) {
+            $image->setLocation(null);
+            $this->images->removeElement($image);
+        }
     }
 }

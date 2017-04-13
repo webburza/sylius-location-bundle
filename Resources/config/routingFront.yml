@@ -8,12 +8,6 @@ webburza_location_frontend_index:
     defaults:
         _controller: WebburzaSyliusLocationBundle:Frontend\Location:index
 
-webburza_location_frontend_search:
-    path: /search/
-    methods: [GET, POST]
-    defaults:
-        _controller: WebburzaSyliusLocationBundle:Frontend\Location:search
-
 webburza_location_frontend_show:
     path: /{slug}/
     methods: [GET]

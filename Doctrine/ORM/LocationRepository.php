@@ -2,38 +2,51 @@
 
 namespace Webburza\Sylius\LocationBundle\Doctrine\ORM;
 
-use Sylius\Component\Resource\Repository\RepositoryInterface;
 use Sylius\Bundle\ResourceBundle\Doctrine\ORM\EntityRepository;
+use Webburza\Sylius\LocationBundle\Model\LocationInterface;
+use Webburza\Sylius\LocationBundle\Repository\LocationRepositoryInterface;
 
-class LocationRepository extends EntityRepository implements RepositoryInterface
+class LocationRepository extends EntityRepository implements LocationRepositoryInterface
 {
     /**
      * Find a public location by search query.
      *
-     * @param $query
-     * @param $locale
-     * @return array
+     * @param string $query
+     * @param string $locale
+     *
+     * @return LocationInterface[]
      */
     public function findPublicByQuery($query, $locale)
     {
-        $queryBuilder = $this->createQueryBuilder('loc');
-        $queryBuilder->leftJoin('loc.translations', 't')
-            ->where('loc.published = true')
-            ->andWhere('t.locale = :locale');
+        $queryBuilder = $this->createQueryBuilder('o');
+        $queryBuilder->leftJoin('o.translations', 'translation')
+                     ->where('o.published = true')
+                     ->andWhere('translation.locale = :locale');
 
         $queryBuilder->setParameter('locale', $locale);
 
         $query = trim($query);
+
         if (strlen($query)) {
-            foreach (array('t.name', 't.streetName', 't.streetNumber', 't.zip', 't.city', 't.state', 't.country') as $column) {
-                $whereLike[] = $column.' LIKE :word';
+            $whereLike = [];
+
+            foreach ([
+                'translation.name',
+                'translation.streetName',
+                'translation.streetNumber',
+                'translation.zip',
+                'translation.city',
+                'translation.state',
+                'translation.country'
+            ] as $column) {
+                $whereLike[] = $column . ' LIKE :word';
             }
 
             if (count($whereLike)) {
                 $queryBuilder->andWhere(implode(' OR ', $whereLike));
             }
 
-            $queryBuilder->setParameter('word', '%'.$query.'%');
+            $queryBuilder->setParameter('word', '%' . $query . '%');
         }
 
         return $queryBuilder->getQuery()->getResult();
@@ -42,23 +55,23 @@ class LocationRepository extends EntityRepository implements RepositoryInterface
     /**
      * Find a publicly visible location by a slug, for the provided locale.
      *
-     * @param $slug
-     * @param $locale
+     * @param string $slug
+     * @param string $locale
      *
-     * @return array
+     * @return LocationInterface
      */
     public function findPublicBySlug($slug, $locale)
     {
-        $queryBuilder = $this->createQueryBuilder('loc');
-        $queryBuilder->leftJoin('loc.translations', 't');
+        $queryBuilder = $this->createQueryBuilder('o');
+        $queryBuilder->leftJoin('o.translations', 'translation');
 
         $queryBuilder
-            ->andWhere('t.slug = :slug')
-            ->andWhere('t.locale = :locale')
-            ->andWhere('loc.published = true');
+            ->andWhere('translation.slug = :slug')
+            ->andWhere('translation.locale = :locale')
+            ->andWhere('o.published = true');
 
         $queryBuilder->setParameters([
-            ':slug' => $slug,
+            ':slug'   => $slug,
             ':locale' => $locale,
         ]);
 

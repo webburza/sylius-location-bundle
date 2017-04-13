@@ -1,0 +1,21 @@
+parameters:
+    # Models
+    webburza_location.model.location_image.class: Webburza\Sylius\LocationBundle\Model\LocationImage
+    webburza_location.model.location.class: Webburza\Sylius\LocationBundle\Model\Location
+    webburza_location.model.location_translation.class: Webburza\Sylius\LocationBundle\Model\LocationTranslation
+    webburza_location.model.location_type.class: Webburza\Sylius\LocationBundle\Model\LocationType
+    webburza_location.model.location_type_translation.class: Webburza\Sylius\LocationBundle\Model\LocationTypeTranslation
+
+    # Event Listeners
+    webburza_location.event_listener.admin_menu_builder.class: Webburza\Sylius\LocationBundle\EventListener\AdminMenuBuilderListener
+    webburza_location.event_listener.image_upload.class: Webburza\Sylius\LocationBundle\EventListener\ImageUploadListener
+
+    # Form Types
+    webburza_location.form.type.location_image.class: Webburza\Sylius\LocationBundle\Form\Type\LocationImageType
+    webburza_location.form.type.location.class: Webburza\Sylius\LocationBundle\Form\Type\LocationType
+    webburza_location.form.type.location_translation.class: Webburza\Sylius\LocationBundle\Form\Type\LocationTranslationType
+    webburza_location.form.type.location_type.class: Webburza\Sylius\LocationBundle\Form\Type\LocationTypeType
+    webburza_location.form.type.location_type_translation.class: Webburza\Sylius\LocationBundle\Form\Type\LocationTypeTranslationType
+
+    # Repositories
+    webburza_location.repository.location.class: Webburza\Sylius\LocationBundle\Doctrine\ORM\LocationRepository

@@ -1,23 +1,16 @@
 <?php
 
-namespace Webburza\Sylius\LocationBundle\Entity;
+namespace Webburza\Sylius\LocationBundle\Model;
 
-use Doctrine\ORM\Mapping as ORM;
-use Gedmo\Mapping\Annotation as Gedmo;
-use Sylius\Component\Resource\Model\ResourceInterface;
 use JMS\Serializer\Annotation as JMS;
-use Sylius\Component\Resource\Model\TranslatableInterface;
 use Sylius\Component\Resource\Model\TranslatableTrait;
-use Sylius\Component\Resource\Model\TranslationInterface;
 
 /**
  * LocationType.
  *
- * @ORM\Table("webburza_sylius_location_type")
- * @ORM\Entity()
  * @JMS\ExclusionPolicy("all")
  */
-class LocationType implements ResourceInterface, TranslatableInterface
+class LocationType implements LocationTypeInterface
 {
     use TranslatableTrait {
         __construct as private initializeTranslationsCollection;
@@ -26,26 +19,22 @@ class LocationType implements ResourceInterface, TranslatableInterface
     /**
      * @var int
      *
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
      * @JMS\Expose()
      */
     protected $id;
 
     /**
+     * @var string
+     */
+    protected $code;
+
+    /**
      * @var \DateTime
-     *
-     * @ORM\Column(name="created_at", type="datetime")
-     * @Gedmo\Timestampable(on="create")
      */
     protected $createdAt;
 
     /**
      * @var \DateTime
-     *
-     * @ORM\Column(name="updated_at", type="datetime", nullable=true)
-     * @Gedmo\Timestampable(on="update")
      */
     protected $updatedAt;
 
@@ -68,6 +57,28 @@ class LocationType implements ResourceInterface, TranslatableInterface
     }
 
     /**
+     * Get code.
+     *
+     * @return string
+     */
+    public function getCode()
+    {
+        return $this->code;
+    }
+
+    /**
+     * @param $code
+     *
+     * @return $this
+     */
+    public function setCode($code)
+    {
+        $this->code = $code;
+
+        return $this;
+    }
+
+    /**
      * Get name.
      *
      * @return string
@@ -75,6 +86,14 @@ class LocationType implements ResourceInterface, TranslatableInterface
     public function getName()
     {
         return $this->getTranslation()->getName();
+    }
+
+    /**
+     * @param $name
+     */
+    public function setName($name)
+    {
+        $this->getTranslation()->setName($name);
     }
 
     /**
@@ -136,20 +155,10 @@ class LocationType implements ResourceInterface, TranslatableInterface
     }
 
     /**
-     * Create resource translation model.
-     *
-     * @return TranslationInterface
+     * {@inheritdoc}
      */
     protected function createTranslation()
     {
         return new LocationTypeTranslation();
-    }
-    /**
-     * @return string
-     */
-    public function __toString()
-    {
-        return  $this->getName();
-
     }
 }

@@ -1,34 +1,55 @@
+imports:
+    - { resource: parameters.yml }
+    - { resource: grids/location.yml }
+    - { resource: grids/location_type.yml }
+
+doctrine:
+    orm:
+        resolve_target_entities:
+            Webburza\Sylius\LocationBundle\Model\LocationImageInterface: '%webburza_location.model.location_image.class%'
+            Webburza\Sylius\LocationBundle\Model\LocationTypeInterface: '%webburza_location.model.location_type.class%'
+            Webburza\Sylius\LocationBundle\Model\LocationInterface: '%webburza_location.model.location.class%'
+        entity_managers:
+            default:
+                mappings:
+                    WebburzaSyliusLocationBundle:
+                        type: xml
+                        prefix: Webburza\Sylius\LocationBundle\Model
+                        dir: 'Resources/config/doctrine'
+                        is_bundle: true
+                        mapping: true
+
 sylius_resource:
     resources:
         webburza_location.location:
             classes:
-                repository: Webburza\Sylius\LocationBundle\Doctrine\ORM\LocationRepository
-                model: Webburza\Sylius\LocationBundle\Entity\Location
-                form: Webburza\Sylius\LocationBundle\Form\Type\LocationType
+                repository: '%webburza_location.repository.location.class%'
+                model: '%webburza_location.model.location.class%'
+                form: '%webburza_location.form.type.location.class%'
             translation:
                 classes:
-                    model: Webburza\Sylius\LocationBundle\Entity\LocationTranslation
-                    form: Webburza\Sylius\LocationBundle\Form\Type\LocationTranslationType
+                    model: '%webburza_location.model.location_translation.class%'
+                    form: '%webburza_location.form.type.location_translation.class%'
 
         webburza_location.location_type:
             classes:
-                model: Webburza\Sylius\LocationBundle\Entity\LocationType
-                form: Webburza\Sylius\LocationBundle\Form\Type\LocationTypeType
+                model: '%webburza_location.model.location_type.class%'
+                form: '%webburza_location.form.type.location_type.class%'
             translation:
                 classes:
-                    model: Webburza\Sylius\LocationBundle\Entity\LocationTypeTranslation
-                    form: Webburza\Sylius\LocationBundle\Form\Type\LocationTypeTranslationType
+                    model: '%webburza_location.model.location_type_translation.class%'
+                    form: '%webburza_location.form.type.location_translation.class%'
 
         webburza_location.location_image:
             classes:
-                model: Webburza\Sylius\LocationBundle\Entity\LocationImage
-                form: Webburza\Sylius\LocationBundle\Form\Type\LocationImageType
+                model: '%webburza_location.model.location_image.class%'
+                form: '%webburza_location.form.type.location_image.class%'
 
 liip_imagine:
     filter_sets:
-        sylius_255x255:
+        sylius_260x260:
             filters:
-                thumbnail: { size: [255, 255] }
+                thumbnail: { size: [260, 260] }
 
 webburza_sylius_location:
     google_maps_enabled: false

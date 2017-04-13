@@ -1,5 +1,7 @@
 {% extends '@SyliusShop/layout.html.twig' %}
 
+{% import '@SyliusUi/Macro/buttons.html.twig' as buttons %}
+
 {% block title %}{{ location.name }} - {{ location.address }}{% endblock %}
 
 {% block metatags %}
@@ -11,131 +13,119 @@
     <meta property="place:location:longitude" content="{{ location.longitude }}"/>
 {% endblock %}
 
-{% block stylesheets %}
-    {{ parent() }}
-    {% include '@SyliusUi/_stylesheets.html.twig' with {'path': 'bundles/webburzasyliuslocation/css/locations.css'} %}
-{% endblock %}
-
-
 {% block content %}
-    <hr>
-    <div class="row">
-        <div class="col-md-12">
+    <div class="ui breadcrumb">
+        <a href="{{ path('sylius_shop_homepage') }}" class="section">{{ 'sylius.ui.home'|trans }}</a>
+        <div class="divider">/</div>
 
-            <div class="Location">
+        <a href="{{ path('webburza_location_frontend_index') }}" class="section">
+            {{ 'webburza_location.ui.locations'|trans }}
+        </a>
+        <div class="divider">/</div>
+        <div class="active section">{{ location.name }}</div>
+    </div>
 
-                <div class="row">
+    <div class="ui hidden divider"></div>
 
-                    <div class="col-md-12">
+    <div class="ui two column stackable grid location-item"
+         data-id="{{ location.id }}"
+         data-latitude="{{ location.latitude }}"
+         data-longitude="{{ location.longitude }}"
+         data-href="{{ path('webburza_location_frontend_show', {slug: location.slug}) }}"
+    >
 
-                        <div class="row">
-                            <div class="col-md-12">
-                                <h4>{{ location.locationType.name }}</h4>
-                            </div>
+        <div class="column">
+            {% set href = location.hasImages ? (location.images.first.path | imagine_filter(filter|default('sylius_shop_product_large_thumbnail'))) : 'http://placehold.it/400x300' %}
+            {% set src = location.hasImages ? (location.images.first.path |imagine_filter(filter|default('sylius_shop_product_large_thumbnail'))) : href %}
 
-                            <div class="col-md-12">
-                                <div class="page-header">
-                                    <h1>{{ location.name }} {{ location.fullAddress ? ' - ' ~ location.fullAddress : '' }}</h1>
-                                </div>
-                                <div class="row">
-                                    {% if location.phone or location.email %}
-                                        <div class="col-md-3 col-sm-4">
-                                            <div class="panel panel-default">
-                                                <div class="panel-heading">
-                                                    <h2 class="panel-title">{{ 'webburza.sylius.location.frontend.contact' | trans }}</h2>
-                                                </div>
-                                                <div class="panel-body">
-                                                    {% if location.phone %}
-                                                    <p>{{ 'webburza.sylius.location.label.phone' | trans }}: <a
-                                                                href="tel:{{ location.phone|replace({'-' : '', ' ' : '', '/' : ''}) }}">{{ location.phone }}</a>
-                                                        {% endif %}
-                                                    </p>
-                                                    {% if location.email %}
-                                                        <p>{{ 'webburza.sylius.location.label.email' | trans }}:
-                                                            <a
-                                                                    href="mailto:{{ location.email }}">{{ location.email }}</a>
-                                                        </p>
-                                                    {% endif %}
-                                                </div>
-                                            </div>
-                                        </div>
-                                    {% endif %}
+            <a href="{{ href }}" class="ui fluid image" data-lightbox="sylius-location-image">
+                <img src="{{ src }}" id="main-image" alt="" />
+            </a>
 
-                                    {% if location.workingHours %}
-                                        <div class="col-md-3 col-sm-4">
-                                            <div class="panel panel-default">
-                                                <div class="panel-heading">
-                                                    <h2 class="panel-title">{{ 'webburza.sylius.location.label.working_hours' | trans }}</h2>
-                                                </div>
-                                                <div class="panel-body">
-                                                    <p>{{ location.workingHours|nl2br }}</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    {% endif %}
+            {% if location.images|length > 1 %}
+                <div class="ui divider"></div>
+                <div class="ui small images">
+                    {% for image in location.images %}
+                        <a href="{{ image.path|imagine_filter('sylius_shop_product_original') }}" class="ui image" data-lightbox="sylius-location-image">
+                            <img src="{{ image.path|imagine_filter('sylius_shop_product_small_thumbnail') }}" />
+                        </a>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </div>
+
+        <div class="column">
+            <h1 class="ui monster dividing header">{{ location.name }}</h1>
+
+            <div class="ui stackable grid">
+                <div class="four wide column">
+                    <div class="ui list">
+                        {% if location.fullAddress %}
+                            <div class="item">
+                                <i class="marker icon"></i>
+                                <div class="content">
+                                    {{ location.fullAddress }}
                                 </div>
                             </div>
-                        </div>
+                        {% endif %}
+
+                        {% if location.email %}
+                            <div class="item">
+                                <i class="mail icon"></i>
+                                <div class="content">
+                                    {{ location.email }}
+                                </div>
+                            </div>
+                        {% endif %}
+
+                        {% if location.phone %}
+                            <div class="item">
+                                <i class="phone icon"></i>
+                                <div class="content">
+                                    {{ location.phone }}
+                                </div>
+                            </div>
+                        {% endif %}
+
+                        {% if location.workingHours %}
+                            <div class="item">
+                                <i class="clock icon"></i>
+                                <div class="content">
+                                    {{ location.workingHours }}
+                                </div>
+                            </div>
+                        {% endif %}
                     </div>
                 </div>
-                {% if location.images.snapshot | length %}
-                    <div class="row">
-                        <div class="col-md-12">
-                            <h2>{{ 'webburza.sylius.location.label.images' | trans }}</h2>
-                        </div>
-
-                        {% for image in location.images.snapshot %}
-                            <div class="col-md-3 col-sm-3 col-xs-4">
-                                <a href="{{ image.path | imagine_filter('sylius_255x255') }}" target="_blank"><img
-                                            class="Location-image img-thumbnail thumbnail"
-                                            src="{{ image.path | imagine_filter('sylius_255x255') }}"></a>
-                            </div>
-                        {% endfor %}
-                    </div>
-                {% endif %}
-
-
-                <div class="row">
-
-                    <div class="col-md-12">
-                        <p><a class="btn btn-success btn-sm"
-                              href="{{ path('webburza_location_frontend_index') }}"><i
-                                        class="glyphicon glyphicon-chevron-left" role="presentation"
-                                        aria-hidden="true"></i> {{ 'webburza.sylius.location.back_to_all' | trans }}
-                            </a></p>
-                    </div>
+                <div class="twelve wide right aligned column">
+                    <span class="ui sub header">
+                        {{ location.locationType.name }} <br>
+                        {{ location.internalName }}
+                    </span>
                 </div>
-
-                {% if googleMapsEnabled %}
-                    <div class="row">
-                        <div class="col-md-12">
-                            <hr>
-                            <div class="Map Map--view">
-                                <div id="Map-holder"></div>
-                            </div>
-                        </div>
-
-                    </div>
-
-                    <div class="row">
-                        <div class="col-md-12 text-center">
-                            <br>
-                            <a class="btn btn-sm btn-success" href="{{ googleMapUrl }}" target="_blank"><i
-                                        class="glyphicon glyphicon-new-window" role="presentation"
-                                        aria-hidden="true"></i> {{ 'webburza.sylius.location.frontend.open_in_gm' | trans }}
-                            </a>
-                        </div>
-                    </div>
-                {% endif %}
-
-                <script>
-                    var loc = {{ locationJson | raw }};
-                </script>
             </div>
-            {#{% endblock %}#}
+
+            <div class="ui hidden divider"></div>
+
+            {% if location.description %}
+                <div class="ui basic segment">
+                    {{ location.description }}
+                </div>
+            {% endif %}
         </div>
     </div>
-    <hr>
+
+    {% if googleMapsEnabled and googleMapsKey %}
+        <div class="ui segment">
+            <div id="mapHolder" style="height: 500px;"></div>
+        </div>
+        <div class="ui center aligned basic segment">
+            {{ buttons.default(path('webburza_location_frontend_index'), 'webburza_location.ui.back', null, 'chevron left') }}
+            <a class="ui labeled icon button primary" href="{{ googleMapUrl }}" target="_blank">
+                <i class="icon external"></i> {{ 'webburza_location.ui.open_in_gm' | trans }}
+            </a>
+        </div>
+    {% endif %}
 {% endblock %}
 
 {% block javascripts %}
@@ -144,6 +134,5 @@
     {% if googleMapsEnabled %}
         <script src="//maps.googleapis.com/maps/api/js?key={{ googleMapsKey }}"></script>
     {% endif %}
-    {% include '@SyliusUi/_javascripts.html.twig' with {'path': 'bundles/webburzasyliuslocation/js/location.js'} %}
     {% include '@SyliusUi/_javascripts.html.twig' with {'path': 'bundles/webburzasyliuslocation/js/locations.js'} %}
 {% endblock %}

@@ -1,0 +1,64 @@
+<div class="column">
+    <div class="ui fluid card location-item"
+         data-id="{{ location.id }}"
+         data-latitude="{{ location.latitude }}"
+         data-longitude="{{ location.longitude }}"
+         data-href="{{ path('webburza_location_frontend_show', {slug: location.slug}) }}"
+    >
+        <a href="{{ path('webburza_location_frontend_show', {'slug': location.slug}) }}">
+            <img src="{{ location.hasImages ? location.images.first.path | imagine_filter('sylius_260x260') : 'https://placehold.it/260x260' }}"
+                 alt="" class="ui fluid image">
+        </a>
+
+        <div class="content">
+            <a href="{{ path('webburza_location_frontend_show', {'slug': location.slug}) }}"
+               class="header">{{ location.name }}</a>
+
+            {% if location.locationType %}
+                <div class="meta">
+                    {{ location.locationType.name }}
+                </div>
+            {% endif %}
+
+            <div class="description">
+                <div class="ui list">
+                    {% if location.fullAddress %}
+                        <div class="item">
+                            <i class="marker icon"></i>
+                            <div class="content">
+                                {{ location.fullAddress }}
+                            </div>
+                        </div>
+                    {% endif %}
+
+                    {% if location.email %}
+                        <div class="item">
+                            <i class="mail icon"></i>
+                            <div class="content">
+                                {{ location.email }}
+                            </div>
+                        </div>
+                    {% endif %}
+
+                    {% if location.phone %}
+                        <div class="item">
+                            <i class="phone icon"></i>
+                            <div class="content">
+                                {{ location.phone }}
+                            </div>
+                        </div>
+                    {% endif %}
+
+                    {% if location.workingHours %}
+                        <div class="item">
+                            <i class="clock icon"></i>
+                            <div class="content">
+                                {{ location.workingHours }}
+                            </div>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -4,9 +4,6 @@ This bundle adds location (shops, offices, ...) functionality to Sylius e-commer
 and can have their own images. Frontend has a listing of all locations, a simple search, detailed location view with
 images and Google Maps support on both pages.
 
-[<img title="All locations" src="http://i.imgur.com/LdEQhsn.png" width="300">](http://i.imgur.com/LdEQhsn.png)
-[<img title="Single location" src="http://i.imgur.com/WiKPTu5.jpg" width="308">](http://i.imgur.com/WiKPTu5.jpg)
-
 ---
 
 ## Installation
@@ -22,11 +19,11 @@ images and Google Maps support on both pages.
   ```php
   public function registerBundles()
   {
-    $bundles = array(
+    $bundles = [
       // ...
       new \Webburza\Sylius\LocationBundle\WebburzaSyliusLocationBundle(),
       // ...
-    );
+    ];
   }
   ```
 
@@ -34,8 +31,7 @@ images and Google Maps support on both pages.
 
   ```yaml
   imports:
-      - { resource: @WebburzaSyliusLocationBundle/Resources/config/config.yml }
-      - { resource: "@WebburzaSyliusLocationBundle/Resources/config/grids/grids.yml" }
+      - { resource: "@WebburzaSyliusLocationBundle/Resources/config/config.yml" }
   ```
 
   Among other things, this provides configuration entries which can then be overriden
@@ -52,7 +48,7 @@ images and Google Maps support on both pages.
   ```yaml
   webburza_sylius_location_bundle:
       resource: "@WebburzaSyliusLocationBundle/Resources/config/routing.yml"
-
+  
   webburza_sylius_location_bundle_front:
       resource: "@WebburzaSyliusLocationBundle/Resources/config/routingFront.yml"
       prefix: /location
@@ -62,15 +58,18 @@ images and Google Maps support on both pages.
   routes and frontend routes.
 
   5. The bundle should now be fully integrated, but it still requires
-database tables to be created. To ease this
-process, after you've integrated the bundle you can run the
-following command:
+database tables to be created. For this, we recommend using migrations.
 
   ```bash
-  $ bin/console webburza:sylius-location-bundle:install
+  $ bin/console doctrine:migrations:diff
+  $ bin/console doctrine:migrations:migrate
   ```
-
-  This will create all the required database tables, prefixed with `webburza_` under the existing 'content' node.
+  
+  Or if you don't use migrations, you can update the database schema directly.
+  
+  ```bash
+    $ bin/console doctrine:schema:update
+  ```
 
   6. By default, there will be no location types defined. You should create and translate
 the location types that you need and create locations that use those types.
@@ -90,4 +89,4 @@ This bundle is available under the [MIT license](LICENSE).
 
 ## To-do
 
-- Tests (planned mid-June)
+- automated tests

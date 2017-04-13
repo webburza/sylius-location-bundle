@@ -1,73 +1,44 @@
-webburza:
-    sylius:
+webburza_location:
+    ui:
+        locations: Locations
+        location_types: Location types
+        new_location: New location
+        edit_location: Edit location
+        new_location_type: New location type
+        edit_location_type: Edit location type
+        all_locations: All locations
+        search_term: Name, city, street...
+        details: Details
+        contact: Contact
+        open_in_gm: Open location in Google Maps
+        back: Back to all locations
+    form:
         location:
-            backend:
-                locations: Locations
-                location_types: Location types
-            frontend:
-                locations: Locations
-                all_locations: All locations
-                city_place_street: City or street
-                details: Details
-                contact: Contact
-                open_in_gm: Open location in Google Maps
-            breadcrumb:
-                index: Locations
-            index_header: Locations
-            create_header: New location
-            update_header: Editing location
-            show_header: Location details
-            create: Create location
-            open: Open
-            no_results: No locations found.
             translations: Translations
-            general_info: General info
-            back_to_all: Back to all locations
-            delete_image: Delete image
-            label:
-                id: '#ID'
-                name: Name
-                internal_name: Internal name
-                street_name: Street name
-                street_number: Street number
-                city: City
-                zip: Zip code
-                state: State
-                country: Country
-                working_hours: Working hours
-                description: Description
-                meta_keywords: Meta Keywords
-                meta_description: Meta Description
-                phone: Phone
-                email: Email
-                latitude: Latitude
-                longitude: Longitude
-                images: Images
-                image: Image
-                published_at: Published At
-                published: Published?
-                created_at: Created At
-                updated_at: Updated At
-                type: Type
-                choose_type: Choose a type...
-                image: Image
+            images: Images
+            internal_name: Internal name
+            phone: Phone
+            email: Email
+            latitude: Latitude
+            longitude: Longitude
+            location_type: Type
+            published: Published
+        location_translation:
+            name: Name
+            street_name: Street
+            street_number: Street number
+            city: City
+            zip: Zip
+            state: State
+            country: Country
+            working_hours: Working hours
+            description: Description
+            meta_keywords: Meta keywords
+            meta_description: Meta description
+        location_image:
+            file: File
         location_type:
-            backend:
-                location_types: Location Types
-            breadcrumb:
-                index: Location Types
-            index_header: Location Types
-            create_header: New type
-            update_header: Editing type
-            show_header: Type details
-            create: Create type
-            open: Open
-            no_results: No types found.
+            code: Code
             translations: Translations
-            general_info: General info
-            label:
-                id: '#ID'
-                name: Name
-                published: Published?
-                created_at: Created At
-                updated_at: Updated At
+        location_type_translation:
+            name: Name

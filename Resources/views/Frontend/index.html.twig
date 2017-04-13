@@ -1,1 +1,49 @@
-{{ render(controller('WebburzaSyliusLocationBundle:Frontend/Location:search', {'request': app.request})) }}
+{% extends '@SyliusShop/layout.html.twig' %}
+
+{% import 'SyliusUiBundle:Macro:messages.html.twig' as messages %}
+
+{% block title %}{{ 'webburza_location.ui.all_locations' | trans }}{% endblock %}
+
+{% block content %}
+    <div class="ui breadcrumb">
+        <a href="{{ path('sylius_shop_homepage') }}"
+           class="section">{{ 'sylius.ui.home'|trans }}</a>
+        <div class="divider">/</div>
+        <div class="active section">{{ 'webburza_location.ui.locations'|trans }}</div>
+    </div>
+
+    <h1 class="ui monster section dividing header">
+        {{ 'webburza_location.ui.locations' | trans }}
+    </h1>
+
+    {% include '@WebburzaSyliusLocation/Frontend/_search.html.twig' %}
+
+    {% if googleMapsEnabled and googleMapsKey %}
+        <div class="ui segment">
+            <div id="mapHolder" style="height: 500px;"></div>
+        </div>
+    {% endif %}
+
+    <div class="ui stackable grid">
+        <div class="wide column">
+            {% if locations | length > 0 %}
+                <div class="ui four column stackable grid">
+                    {% for location in locations %}
+                        {% include '@WebburzaSyliusLocation/Frontend/_card.html.twig' %}
+                    {% endfor %}
+                </div>
+            {% else %}
+                {{ messages.info('sylius.ui.no_results_to_display'|trans) }}
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    {% if googleMapsEnabled %}
+        <script src="//maps.googleapis.com/maps/api/js?key={{ googleMapsKey }}"></script>
+    {% endif %}
+    {% include '@SyliusUi/_javascripts.html.twig' with {'path': 'bundles/webburzasyliuslocation/js/locations.js'} %}
+{% endblock %}

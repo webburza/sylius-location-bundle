@@ -18,10 +18,9 @@ class LocationImageType extends AbstractResourceType
     {
         $builder
             ->add('file', FileType::class, [
-                'label' => 'webburza.sylius.location.label.image',
-                'property_path' => 'file',
-            ])
-        ;
+                'label'         => 'webburza_location.form.location_image.file',
+                'property_path' => 'file'
+            ]);
     }
 
     /**

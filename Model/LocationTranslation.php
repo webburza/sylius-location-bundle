@@ -1,29 +1,20 @@
 <?php
 
-namespace Webburza\Sylius\LocationBundle\Entity;
+namespace Webburza\Sylius\LocationBundle\Model;
 
-use Doctrine\ORM\Mapping as ORM;
 use Sylius\Component\Resource\Model\AbstractTranslation;
-use Sylius\Component\Resource\Model\ResourceInterface;
-use Symfony\Component\Validator\Constraints as Assert;
-use Gedmo\Mapping\Annotation as Gedmo;
 use JMS\Serializer\Annotation as JMS;
 
 /**
  * Location.
  *
- * @ORM\Table(name="webburza_sylius_location_translation")
- * @ORM\Entity()
  * @JMS\ExclusionPolicy("all")
  */
-class LocationTranslation extends AbstractTranslation implements ResourceInterface
+class LocationTranslation extends AbstractTranslation implements LocationTranslationInterface
 {
     /**
      * @var int
      *
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
      * @JMS\Expose()
      */
     protected $id;
@@ -31,8 +22,6 @@ class LocationTranslation extends AbstractTranslation implements ResourceInterfa
     /**
      * @var string
      *
-     * @ORM\Column(name="name", type="string", length=255, nullable=true)
-     * @Assert\NotBlank()
      * @JMS\Expose()
      */
     protected $name;
@@ -40,8 +29,6 @@ class LocationTranslation extends AbstractTranslation implements ResourceInterfa
     /**
      * @var string
      *
-     * @ORM\Column(name="slug", type="string", length=255, nullable=true)
-     * @Gedmo\Slug(fields={"name"}, unique_base="locale")
      * @JMS\Expose()
      */
     protected $slug;
@@ -49,8 +36,6 @@ class LocationTranslation extends AbstractTranslation implements ResourceInterfa
     /**
      * @var string
      *
-     * @ORM\Column(name="street_name", type="string", length=255)
-     * @Assert\NotBlank()
      * @JMS\Expose()
      */
     protected $streetName;
@@ -58,8 +43,6 @@ class LocationTranslation extends AbstractTranslation implements ResourceInterfa
     /**
      * @var string
      *
-     * @ORM\Column(name="street_number", type="string", length=255)
-     * @Assert\NotBlank()
      * @JMS\Expose()
      */
     protected $streetNumber;
@@ -67,8 +50,6 @@ class LocationTranslation extends AbstractTranslation implements ResourceInterfa
     /**
      * @var string
      *
-     * @ORM\Column(name="city", type="string", length=255)
-     * @Assert\NotBlank()
      * @JMS\Expose()
      */
     protected $city;
@@ -76,8 +57,6 @@ class LocationTranslation extends AbstractTranslation implements ResourceInterfa
     /**
      * @var string
      *
-     * @ORM\Column(name="zip", type="string", length=20)
-     * @Assert\NotBlank()
      * @JMS\Expose()
      */
     protected $zip;
@@ -85,8 +64,6 @@ class LocationTranslation extends AbstractTranslation implements ResourceInterfa
     /**
      * @var string
      *
-     * @ORM\Column(name="state", type="string", length=255)
-     * @Assert\NotBlank()
      * @JMS\Expose()
      */
     protected $state;
@@ -94,8 +71,6 @@ class LocationTranslation extends AbstractTranslation implements ResourceInterfa
     /**
      * @var string
      *
-     * @ORM\Column(name="country", type="string", length=255)
-     * @Assert\NotBlank()
      * @JMS\Expose()
      */
     protected $country;
@@ -103,8 +78,6 @@ class LocationTranslation extends AbstractTranslation implements ResourceInterfa
     /**
      * @var string
      *
-     * @ORM\Column(name="working_hours", type="text")
-     * @Assert\NotBlank()
      * @JMS\Expose()
      */
     protected $workingHours;
@@ -112,7 +85,6 @@ class LocationTranslation extends AbstractTranslation implements ResourceInterfa
     /**
      * @var string
      *
-     * @ORM\Column(name="description", type="text", nullable=true)
      * @JMS\Expose()
      */
     protected $description;
@@ -120,7 +92,6 @@ class LocationTranslation extends AbstractTranslation implements ResourceInterfa
     /**
      * @var string
      *
-     * @ORM\Column(name="meta_keywords", type="text", nullable=true)
      * @JMS\Expose()
      */
     protected $metaKeywords;
@@ -128,7 +99,6 @@ class LocationTranslation extends AbstractTranslation implements ResourceInterfa
     /**
      * @var string
      *
-     * @ORM\Column(name="meta_description", type="text", nullable=true)
      * @JMS\Expose()
      */
     protected $metaDescription;
@@ -152,7 +122,7 @@ class LocationTranslation extends AbstractTranslation implements ResourceInterfa
     /**
      * @param string $name
      *
-     * @return LocationTranslation
+     * @return $this
      */
     public function setName($name)
     {
@@ -172,7 +142,7 @@ class LocationTranslation extends AbstractTranslation implements ResourceInterfa
     /**
      * @param string $slug
      *
-     * @return LocationTranslation
+     * @return $this
      */
     public function setSlug($slug)
     {
@@ -182,11 +152,17 @@ class LocationTranslation extends AbstractTranslation implements ResourceInterfa
     }
 
     /**
-     * Set street name.
-     *
+     * @return string
+     */
+    public function getStreetName()
+    {
+        return $this->streetName;
+    }
+
+    /**
      * @param string $streetName
      *
-     * @return LocationTranslation
+     * @return $this
      */
     public function setStreetName($streetName)
     {
@@ -196,21 +172,17 @@ class LocationTranslation extends AbstractTranslation implements ResourceInterfa
     }
 
     /**
-     * Get street name.
-     *
      * @return string
      */
-    public function getStreetName()
+    public function getStreetNumber()
     {
-        return $this->streetName;
+        return $this->streetNumber;
     }
 
     /**
-     * Set street number.
-     *
      * @param string $streetNumber
      *
-     * @return LocationTranslation
+     * @return $this
      */
     public function setStreetNumber($streetNumber)
     {
@@ -220,21 +192,17 @@ class LocationTranslation extends AbstractTranslation implements ResourceInterfa
     }
 
     /**
-     * Get street number.
-     *
      * @return string
      */
-    public function getStreetNumber()
+    public function getCity()
     {
-        return $this->streetNumber;
+        return $this->city;
     }
 
     /**
-     * Set city.
-     *
      * @param string $city
      *
-     * @return LocationTranslation
+     * @return $this
      */
     public function setCity($city)
     {
@@ -244,21 +212,17 @@ class LocationTranslation extends AbstractTranslation implements ResourceInterfa
     }
 
     /**
-     * Get city.
-     *
      * @return string
      */
-    public function getCity()
+    public function getZip()
     {
-        return $this->city;
+        return $this->zip;
     }
 
     /**
-     * Set zip.
-     *
      * @param string $zip
      *
-     * @return LocationTranslation
+     * @return $this
      */
     public function setZip($zip)
     {
@@ -268,21 +232,17 @@ class LocationTranslation extends AbstractTranslation implements ResourceInterfa
     }
 
     /**
-     * Get zip.
-     *
      * @return string
      */
-    public function getZip()
+    public function getState()
     {
-        return $this->zip;
+        return $this->state;
     }
 
     /**
-     * Set state.
-     *
      * @param string $state
      *
-     * @return LocationTranslation
+     * @return $this
      */
     public function setState($state)
     {
@@ -292,21 +252,17 @@ class LocationTranslation extends AbstractTranslation implements ResourceInterfa
     }
 
     /**
-     * Get state.
-     *
      * @return string
      */
-    public function getState()
+    public function getCountry()
     {
-        return $this->state;
+        return $this->country;
     }
 
     /**
-     * Set country.
-     *
      * @param string $country
      *
-     * @return LocationTranslation
+     * @return $this
      */
     public function setCountry($country)
     {
@@ -316,37 +272,23 @@ class LocationTranslation extends AbstractTranslation implements ResourceInterfa
     }
 
     /**
-     * Get country.
-     *
      * @return string
      */
-    public function getCountry()
+    public function getWorkingHours()
     {
-        return $this->country;
+        return $this->workingHours;
     }
 
     /**
-     * Set workingHours.
-     *
      * @param string $workingHours
      *
-     * @return LocationTranslation
+     * @return $this
      */
     public function setWorkingHours($workingHours)
     {
         $this->workingHours = $workingHours;
 
         return $this;
-    }
-
-    /**
-     * Get workingHours.
-     *
-     * @return string
-     */
-    public function getWorkingHours()
-    {
-        return $this->workingHours;
     }
 
     /**
@@ -360,7 +302,7 @@ class LocationTranslation extends AbstractTranslation implements ResourceInterfa
     /**
      * @param string $description
      *
-     * @return LocationTranslation
+     * @return $this
      */
     public function setDescription($description)
     {
@@ -380,7 +322,7 @@ class LocationTranslation extends AbstractTranslation implements ResourceInterfa
     /**
      * @param string $metaKeywords
      *
-     * @return LocationTranslation
+     * @return $this
      */
     public function setMetaKeywords($metaKeywords)
     {
@@ -400,7 +342,7 @@ class LocationTranslation extends AbstractTranslation implements ResourceInterfa
     /**
      * @param string $metaDescription
      *
-     * @return LocationTranslation
+     * @return $this
      */
     public function setMetaDescription($metaDescription)
     {

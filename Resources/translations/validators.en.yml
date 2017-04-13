@@ -1,0 +1,4 @@
+webburza_location:
+    general:
+        not_blank: This value cannot be blank.
+        email_not_valid: This email is invalid.

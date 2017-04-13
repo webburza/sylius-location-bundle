@@ -4,7 +4,7 @@ sylius_grid:
             driver:
                 name: doctrine/orm
                 options:
-                    class: Webburza\Sylius\LocationBundle\Entity\LocationType
+                    class: '%webburza_location.model.location_type.class%'
             sorting:
                 id: asc
             fields:
@@ -19,9 +19,8 @@ sylius_grid:
                 createdAt:
                     type: datetime
                     label: sylius.ui.created_at
-                updatedAt:
-                    type: datetime
-                    label: sylius.ui.updated_at
+                    options:
+                        format: Y-m-d H:i:s
             actions:
                 main:
                     create:

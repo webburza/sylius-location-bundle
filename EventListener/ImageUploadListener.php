@@ -2,14 +2,12 @@
 
 namespace Webburza\Sylius\LocationBundle\EventListener;
 
+use Sylius\Component\Core\Uploader\ImageUploaderInterface;
 use Symfony\Component\EventDispatcher\GenericEvent;
-use Webburza\Sylius\LocationBundle\Entity\Location;
-use Webburza\Sylius\LocationBundle\Uploader\ImageUploaderInterface;
+use Webburza\Sylius\LocationBundle\Model\LocationImageInterface;
+use Webburza\Sylius\LocationBundle\Model\LocationInterface;
 use Webmozart\Assert\Assert;
 
-/**
- * @author Ivan Matas <ivan.matas@locastic.com>
- */
 class ImageUploadListener
 {
     /**
@@ -30,37 +28,21 @@ class ImageUploadListener
      */
     public function uploadLocationImage(GenericEvent $event)
     {
-        $subject = $event->getSubject();
-        Assert::isInstanceOf($subject, Location::class);
+        /** @var LocationInterface $location */
+        $location = $event->getSubject();
 
-        $this->uploadImages($subject);
-    }
+        Assert::isInstanceOf($location, LocationInterface::class);
 
-
-    /**
-     * @param Location $subject
-     */
-    private function uploadImages(Location $location)
-    {
-        $images = $location->getImages();
-        if ($images->count()) {
-            foreach ($images as $image) {
-//
-                if ($image->hasFile()) {
-                    $this->uploader->upload($image);
-                }
-                if ($image->getLocation() === null) {
-                    $image->setLocation($location);
-                }
-
-                // Upload failed? Let's remove that image.
-                if (null === $image->getPath()) {
-                    $images->removeElement($image);
-                }
-
+        foreach ($location->getImages() as $image) {
+            if ($image->hasFile()) {
+                $this->uploader->upload($image);
+                $image->setLocation($location);
             }
-        } else {
-            $location->clearImages();
+
+            // Upload failed? Let's remove that image.
+            if (null === $image->getPath()) {
+                $location->removeImage($image);
+            }
         }
     }
 }

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
+                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                  xmlns:gedmo="http://gediminasm.org/schemas/orm/doctrine-extensions-mapping"
+                  xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
+                                      http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <mapped-superclass name="Webburza\Sylius\LocationBundle\Model\LocationTranslation" table="webburza_sylius_location_translation">
+    <id name="id" type="integer" column="id">
+      <generator strategy="IDENTITY"/>
+    </id>
+    <field name="name" type="string" column="name" length="255" nullable="false"/>
+
+    <field name="slug" column="slug" type="string">
+      <gedmo:slug fields="name" unique-base="locale" />
+    </field>
+
+    <field name="streetName" type="string" column="street_name" length="255" nullable="true"/>
+    <field name="streetNumber" type="string" column="street_number" length="255" nullable="true"/>
+    <field name="city" type="string" column="city" length="255" nullable="true"/>
+    <field name="zip" type="string" column="zip" length="20" nullable="true"/>
+    <field name="state" type="string" column="state" length="255" nullable="true"/>
+    <field name="country" type="string" column="country" length="255" nullable="true"/>
+    <field name="workingHours" type="text" column="working_hours" nullable="true"/>
+    <field name="description" type="text" column="description" nullable="true"/>
+    <field name="metaKeywords" type="text" column="meta_keywords" nullable="true"/>
+    <field name="metaDescription" type="text" column="meta_description" nullable="true"/>
+  </mapped-superclass>
+</doctrine-mapping>
