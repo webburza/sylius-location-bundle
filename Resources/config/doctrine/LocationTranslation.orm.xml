@@ -9,6 +9,7 @@
       <generator strategy="IDENTITY"/>
     </id>
     <field name="name" type="string" column="name" length="255" nullable="false"/>
+    <field name="locale" type="string" column="locale" nullable="false" />
 
     <field name="slug" column="slug" type="string">
       <gedmo:slug fields="name" unique-base="locale" />
